@@ -61,28 +61,28 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Template 1: Eternal Noor
+				// Template 1: Eternal Noor - Luxurious Emerald & Gold
 				eternal: {
 					primary: 'hsl(var(--eternal-primary))',
 					secondary: 'hsl(var(--eternal-secondary))',
 					tertiary: 'hsl(var(--eternal-tertiary))',
 					accent: 'hsl(var(--eternal-accent))'
 				},
-				// Template 2: Celestial Imaan
+				// Template 2: Celestial Imaan - Royal Blue & Gold
 				celestial: {
 					primary: 'hsl(var(--celestial-primary))',
 					secondary: 'hsl(var(--celestial-secondary))',
 					tertiary: 'hsl(var(--celestial-tertiary))',
 					accent: 'hsl(var(--celestial-accent))'
 				},
-				// Template 3: Sacred Bond
+				// Template 3: Sacred Bond - Rich Teal & Burgundy
 				sacred: {
 					primary: 'hsl(var(--sacred-primary))',
 					secondary: 'hsl(var(--sacred-secondary))',
 					tertiary: 'hsl(var(--sacred-tertiary))',
 					accent: 'hsl(var(--sacred-accent))'
 				},
-				// Template 4: Radiant Ummah
+				// Template 4: Radiant Ummah - Midnight Indigo & Gold
 				radiant: {
 					primary: 'hsl(var(--radiant-primary))',
 					secondary: 'hsl(var(--radiant-secondary))',
@@ -93,7 +93,9 @@ export default {
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				xl: '1rem',
+				'2xl': '1.5rem',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -147,7 +149,15 @@ export default {
 				rotate: {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' }
-				}
+				},
+				'spin-reverse': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(-360deg)' }
+				},
+				'scale-in': {
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -161,7 +171,9 @@ export default {
 				'pulse': 'pulse 3s ease-in-out infinite',
 				'shimmer': 'shimmer 3s infinite',
 				'rotate': 'rotate 20s linear infinite',
-				'rotate-slow': 'rotate 40s linear infinite'
+				'rotate-slow': 'rotate 40s linear infinite',
+				'spin-reverse': 'spin-reverse 1.5s linear infinite',
+				'scale-in': 'scale-in 0.5s ease-out forwards',
 			},
 			backgroundImage: {
 				'eternal-pattern': "url('/patterns/geometric-pattern.svg')",

@@ -37,25 +37,25 @@
 
     --radius: 0.5rem;
 
-    /* Template 1: Eternal Noor */
-    --eternal-primary: 148 51% 30%;      /* Emerald green */
-    --eternal-secondary: 35 92% 56%;     /* Rich gold */
-    --eternal-tertiary: 39 100% 97%;     /* Soft cream */
+    /* Template 1: Eternal Noor - Luxurious Emerald & Gold */
+    --eternal-primary: 148 51% 30%;      /* Rich emerald green */
+    --eternal-secondary: 40 92% 56%;     /* Luxurious gold */
+    --eternal-tertiary: 39 100% 97%;     /* Cream background */
     --eternal-accent: 28 74% 40%;        /* Deep gold accent */
     
-    /* Template 2: Celestial Imaan */
-    --celestial-primary: 217 92% 51%;    /* Royal blue */
-    --celestial-secondary: 0 0% 85%;     /* Silver accents */
-    --celestial-tertiary: 0 0% 100%;     /* Pristine white */
-    --celestial-accent: 215 100% 32%;    /* Deep blue accent */
+    /* Template 2: Celestial Imaan - Royal Blue & Gold */
+    --celestial-primary: 220 87% 34%;    /* Deep royal blue */
+    --celestial-secondary: 0 0% 85%;     /* Silver */
+    --celestial-tertiary: 0 0% 100%;     /* Pure white */
+    --celestial-accent: 45 80% 60%;      /* Rich gold accent */
     
-    /* Template 3: Sacred Bond */
+    /* Template 3: Sacred Bond - Teal & Burgundy */
     --sacred-primary: 187 100% 30%;      /* Deep teal */
-    --sacred-secondary: 0 65% 32%;       /* Maroon */
+    --sacred-secondary: 350 65% 32%;     /* Rich burgundy */
     --sacred-tertiary: 45 95% 62%;       /* Gold */
     --sacred-accent: 186 79% 20%;        /* Deep teal accent */
     
-    /* Template 4: Radiant Ummah */
+    /* Template 4: Radiant Ummah - Midnight Indigo & Gold */
     --radiant-primary: 252 45% 28%;      /* Midnight indigo */
     --radiant-secondary: 256 31% 85%;    /* Soft lavender */
     --radiant-tertiary: 45 95% 62%;      /* Luminous gold */
@@ -150,6 +150,11 @@
 @keyframes rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
 .loader {
@@ -275,4 +280,34 @@
 
 .radiant-text-glow:hover {
   text-shadow: 0 0 8px rgba(255, 217, 90, 0.7);
+}
+
+/* Luxury gradient backgrounds */
+.luxury-gradient-gold {
+  background: linear-gradient(135deg, #f6e27a 0%, #ffd84c 50%, #c6a546 100%);
+}
+
+.luxury-gradient-emerald {
+  background: linear-gradient(135deg, #0d5c46 0%, #137a5e 50%, #0f6b53 100%);
+}
+
+.luxury-gradient-royal {
+  background: linear-gradient(135deg, #102956 0%, #183a7e 50%, #1e4598 100%);
+}
+
+.luxury-gradient-burgundy {
+  background: linear-gradient(135deg, #5f142b 0%, #7a1c38 50%, #8f2446 100%);
+}
+
+.luxury-gradient-celestial {
+  background: linear-gradient(135deg, #001233 0%, #001845 50%, #023e8a 100%);
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
 }

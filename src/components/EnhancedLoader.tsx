@@ -5,9 +5,10 @@ import { cn } from '@/lib/utils';
 interface EnhancedLoaderProps {
   className?: string;
   template: 'eternal' | 'celestial' | 'sacred' | 'radiant';
+  onLoadComplete?: () => void;
 }
 
-const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ className, template }) => {
+const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ className, template, onLoadComplete }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState('Preparing your invitation...');
@@ -35,12 +36,17 @@ const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ className, template }) 
       
       if (currentProgress === 100) {
         clearInterval(interval);
-        setTimeout(() => setLoading(false), 500);
+        setTimeout(() => {
+          setLoading(false);
+          if (onLoadComplete) {
+            onLoadComplete();
+          }
+        }, 500);
       }
     }, 400);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [onLoadComplete]);
 
   const getLoaderStyles = () => {
     switch (template) {

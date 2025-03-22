@@ -64,20 +64,30 @@ const EVENTS = [
 
 const EternalNoor: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
+  const [stopBackgroundMusic, setStopBackgroundMusic] = useState(false);
   const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
   const isMobile = useIsMobile();
+
+  const handleVideoPlay = () => {
+    setStopBackgroundMusic(true);
+  };
+
+  const handleLoaderComplete = () => {
+    setContentReady(true);
+  };
 
   useEffect(() => {
     // Simulate loading assets
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 3500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!contentReady) return;
 
     const observer = new IntersectionObserver(
       entries => {
@@ -100,15 +110,20 @@ const EternalNoor: React.FC = () => {
         observer.unobserve(section);
       });
     };
-  }, [isLoaded]);
+  }, [contentReady]);
 
   return (
-    <div className="min-h-screen bg-eternal-tertiary overflow-x-hidden">
-      <EnhancedLoader template="eternal" />
+    <div className="min-h-screen bg-gradient-to-b from-eternal-tertiary to-[#fcf7eb] overflow-x-hidden">
+      {isLoaded && <EnhancedLoader template="eternal" onLoadComplete={handleLoaderComplete} />}
       
-      {isLoaded && (
+      {contentReady && (
         <>
-          <AudioPlayer audioSrc="/audio/background-nasheed.mp3" variant="eternal" />
+          <AudioPlayer 
+            audioSrc="/audio/background-nasheed.mp3" 
+            variant="eternal" 
+            autoPlay={true} 
+            stopPlayback={stopBackgroundMusic}
+          />
           
           {/* Hero Section */}
           <section className="relative min-h-[100vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden">
@@ -143,7 +158,7 @@ const EternalNoor: React.FC = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-3xl opacity-0 transform translate-y-4 transition-all duration-1000 delay-900">
-                  <div className="bg-white/50 rounded-lg p-5 backdrop-blur-sm border border-eternal-primary/20 text-center shadow-md hover:shadow-lg transition-all">
+                  <div className="bg-gradient-to-br from-white/70 to-white/50 rounded-xl p-5 backdrop-blur-sm border border-eternal-primary/20 text-center shadow-md hover:shadow-lg transition-all">
                     <h3 className="font-amiri text-2xl text-eternal-primary mb-2">Nikah Ceremony</h3>
                     <p className="font-cormorant text-xl mb-1">August 15th, 2024</p>
                     <p className="font-cormorant text-lg mb-2">2:00 PM</p>
@@ -154,7 +169,7 @@ const EternalNoor: React.FC = () => {
                     />
                   </div>
                   
-                  <div className="bg-white/50 rounded-lg p-5 backdrop-blur-sm border border-eternal-primary/20 text-center shadow-md hover:shadow-lg transition-all">
+                  <div className="bg-gradient-to-br from-white/70 to-white/50 rounded-xl p-5 backdrop-blur-sm border border-eternal-primary/20 text-center shadow-md hover:shadow-lg transition-all">
                     <h3 className="font-amiri text-2xl text-eternal-primary mb-2">Walima Reception</h3>
                     <p className="font-cormorant text-xl mb-1">August 15th, 2024</p>
                     <p className="font-cormorant text-lg mb-2">6:00 PM</p>
@@ -198,17 +213,17 @@ const EternalNoor: React.FC = () => {
             </div>
           </section>
 
-          {/* Our Story & Timeline Section */}
+          {/* Our Story Timeline Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-tertiary to-eternal-primary/5 relative overflow-hidden px-4">
             <EnhancedPattern variant="eternal" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <div className="max-w-4xl mx-auto mb-12 eternal-scroll-reveal">
+              <div className="max-w-4xl mx-auto mb-8 eternal-scroll-reveal">
                 <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-6 opacity-0 transform translate-y-4 transition-all duration-1000">
-                  Our Love Story
+                  Our Story
                 </h2>
                 
-                <div className="bg-white/60 p-6 rounded-lg backdrop-blur-sm border border-eternal-primary/20 shadow-md hover:shadow-lg transition-all opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
+                <div className="bg-gradient-to-br from-white/70 to-white/50 p-6 rounded-xl backdrop-blur-sm border border-eternal-primary/20 shadow-md hover:shadow-lg transition-all opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
                   <p className="font-cormorant text-lg md:text-xl text-gray-700 mb-4 leading-relaxed">
                     Our journey began three years ago when our paths crossed at a mutual friend's Eid celebration. What started as a conversation about our shared love for Islamic architecture blossomed into a deep connection rooted in faith and mutual respect.
                   </p>
@@ -221,13 +236,18 @@ const EternalNoor: React.FC = () => {
                 </div>
               </div>
               
-              <div className="max-w-4xl mx-auto mb-12 opacity-0 transform translate-y-4 transition-all duration-1000 delay-400 eternal-scroll-reveal">
+              <div className="max-w-4xl mx-auto mb-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-400 eternal-scroll-reveal">
                 <EventTimeline events={EVENTS} variant="eternal" className="shadow-md hover:shadow-lg transition-all" />
               </div>
 
               {/* Interactive element - Wedding Quiz */}
               <div className="max-w-4xl mx-auto opacity-0 transform translate-y-4 transition-all duration-1000 delay-600 eternal-scroll-reveal">
-                <WeddingQuiz variant="eternal" coupleNames={COUPLE} className="shadow-md hover:shadow-lg transition-all" />
+                <WeddingQuiz 
+                  variant="eternal" 
+                  coupleNames={COUPLE} 
+                  className="shadow-md hover:shadow-lg transition-all" 
+                  onVideoPlay={handleVideoPlay}
+                />
               </div>
             </div>
           </section>
@@ -254,7 +274,7 @@ const EternalNoor: React.FC = () => {
           </section>
 
           {/* Footer */}
-          <footer className="py-8 bg-eternal-primary text-eternal-tertiary">
+          <footer className="py-8 bg-gradient-to-b from-eternal-primary to-eternal-accent text-eternal-tertiary">
             <div className="container mx-auto px-4 text-center">
               <h2 className="font-amiri text-2xl mb-2">Ahmad & Fatima</h2>
               <p className="font-cormorant mb-4">{new Date().getFullYear()}</p>

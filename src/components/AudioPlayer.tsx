@@ -10,6 +10,7 @@ interface AudioPlayerProps {
   className?: string;
   autoPlay?: boolean;
   volume?: number;
+  stopPlayback?: boolean;
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({
@@ -18,6 +19,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   className,
   autoPlay = false,
   volume = 0.4,
+  stopPlayback = false,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,6 +49,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       audio.src = '';
     };
   }, [audioSrc, autoPlay, volume, isMobile]);
+
+  // Effect to handle external stop playback request
+  useEffect(() => {
+    if (stopPlayback && isPlaying && audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [stopPlayback, isPlaying]);
 
   const toggleAudio = () => {
     if (!audioRef.current || !isLoaded) return;

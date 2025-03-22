@@ -66,20 +66,30 @@ const EVENTS = [
 
 const CelestialImaan: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
+  const [stopBackgroundMusic, setStopBackgroundMusic] = useState(false);
   const isMobile = useIsMobile();
   const mainRef = useRef<HTMLDivElement>(null);
   
+  const handleVideoPlay = () => {
+    setStopBackgroundMusic(true);
+  };
+
+  const handleLoaderComplete = () => {
+    setContentReady(true);
+  };
+
   useEffect(() => {
     // Simulate loading assets
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 3500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (!isLoaded || !mainRef.current) return;
+    if (!contentReady || !mainRef.current) return;
     
     // Add scroll animations
     const animatedElements = mainRef.current.querySelectorAll('.animate-on-scroll');
@@ -104,67 +114,72 @@ const CelestialImaan: React.FC = () => {
     return () => {
       animatedElements.forEach((el) => observer.unobserve(el));
     };
-  }, [isLoaded]);
+  }, [contentReady]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-celestial-accent/10 via-celestial-primary/5 to-celestial-tertiary overflow-x-hidden" ref={mainRef}>
-      <EnhancedLoader template="celestial" />
+    <div className="min-h-screen bg-gradient-to-b from-[#102956] via-[#183a7e] to-[#f0f8ff] overflow-x-hidden" ref={mainRef}>
+      {isLoaded && <EnhancedLoader template="celestial" onLoadComplete={handleLoaderComplete} />}
       
-      {isLoaded && (
+      {contentReady && (
         <>
-          <AudioPlayer audioSrc="/audio/background-nasheed.mp3" variant="celestial" />
+          <AudioPlayer 
+            audioSrc="/audio/background-nasheed.mp3" 
+            variant="celestial" 
+            autoPlay={true}
+            stopPlayback={stopBackgroundMusic}
+          />
           
           {/* Hero Section */}
           <section className="relative min-h-[100vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-b from-celestial-accent/30 via-celestial-primary/20 to-transparent z-0"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#102956]/80 via-[#183a7e]/70 to-[#1e4598]/60 z-0"></div>
             
             <EnhancedPattern variant="celestial" intensity="medium" />
             
             <Parallax speed={0.1} className="absolute inset-0 pointer-events-none z-0">
-              <div className="absolute top-[10%] left-[15%] w-12 h-12 md:w-16 md:h-16 rounded-full bg-white opacity-10 animate-pulse" />
-              <div className="absolute top-[20%] right-[10%] w-8 h-8 md:w-12 md:h-12 rounded-full bg-white opacity-10 animate-float" style={{ animationDelay: '0.5s' }} />
-              <div className="absolute bottom-[15%] left-[20%] w-10 h-10 md:w-14 md:h-14 rounded-full bg-white opacity-10 animate-pulse" style={{ animationDelay: '1s' }} />
-              <div className="absolute bottom-[25%] right-[25%] w-16 h-16 md:w-20 md:h-20 rounded-full bg-white opacity-10 animate-float" style={{ animationDelay: '1.5s' }} />
+              <div className="absolute top-[10%] left-[15%] w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#6a8cff] opacity-20 animate-pulse" />
+              <div className="absolute top-[20%] right-[10%] w-8 h-8 md:w-12 md:h-12 rounded-full bg-[#6a8cff] opacity-20 animate-float" style={{ animationDelay: '0.5s' }} />
+              <div className="absolute bottom-[15%] left-[20%] w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#6a8cff] opacity-20 animate-pulse" style={{ animationDelay: '1s' }} />
+              <div className="absolute bottom-[25%] right-[25%] w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#6a8cff] opacity-20 animate-float" style={{ animationDelay: '1.5s' }} />
             </Parallax>
 
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="flex flex-col items-center">
                 <div className="mb-6 animate-on-scroll" data-delay="300">
-                  <h3 className="text-center font-amiri text-celestial-tertiary text-xl md:text-2xl mb-2">بسم الله الرحمن الرحيم</h3>
-                  <p className="text-center text-celestial-tertiary/90 font-cormorant text-lg md:text-xl italic">In the name of Allah, the Most Gracious, the Most Merciful</p>
+                  <h3 className="text-center font-amiri text-white text-xl md:text-2xl mb-2">بسم الله الرحمن الرحيم</h3>
+                  <p className="text-center text-white/90 font-cormorant text-lg md:text-xl italic">In the name of Allah, the Most Gracious, the Most Merciful</p>
                 </div>
                 
                 <div className="text-center mb-6 animate-on-scroll" data-delay="600">
-                  <h1 className="font-playfair text-5xl md:text-7xl font-bold text-celestial-tertiary mb-4">
+                  <h1 className="font-playfair text-5xl md:text-7xl font-bold text-white mb-4">
                     Wedded Bliss
                   </h1>
-                  <div className="h-0.5 w-32 bg-celestial-secondary mx-auto mb-4"></div>
-                  <h2 className="font-cormorant text-3xl md:text-4xl text-celestial-tertiary">Mohammed & Aisha</h2>
+                  <div className="h-0.5 w-32 bg-[#c0af67] mx-auto mb-4"></div>
+                  <h2 className="font-cormorant text-3xl md:text-4xl text-[#e4d48f]">Mohammed & Aisha</h2>
                 </div>
                 
                 <div className="mb-8 animate-on-scroll" data-delay="900">
-                  <p className="text-center text-celestial-tertiary/90 font-cormorant text-xl md:text-2xl px-4">
+                  <p className="text-center text-white/90 font-cormorant text-xl md:text-2xl px-4">
                     With the grace of Allah, together with our families, we invite you to our wedding celebration
                   </p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-3xl animate-on-scroll" data-delay="1200">
-                  <div className="glass-card p-6 rounded-lg text-center shadow-lg hover:shadow-xl transition-all">
-                    <h3 className="font-amiri text-2xl text-celestial-tertiary mb-2">Nikah Ceremony</h3>
-                    <p className="font-cormorant text-xl mb-1 text-celestial-tertiary/90">September 20th, 2024</p>
-                    <p className="font-cormorant text-lg mb-2 text-celestial-tertiary/90">3:00 PM</p>
-                    <p className="font-cormorant text-md text-celestial-tertiary/80 mb-3">Azure Palace, Main Hall</p>
+                  <div className="bg-gradient-to-br from-white/20 to-white/10 p-6 rounded-xl backdrop-blur-md border border-white/20 text-center shadow-lg hover:shadow-xl transition-all">
+                    <h3 className="font-amiri text-2xl text-[#e4d48f] mb-2">Nikah Ceremony</h3>
+                    <p className="font-cormorant text-xl mb-1 text-white/90">September 20th, 2024</p>
+                    <p className="font-cormorant text-lg mb-2 text-white/90">3:00 PM</p>
+                    <p className="font-cormorant text-md text-white/80 mb-3">Azure Palace, Main Hall</p>
                     <MapLocation 
                       address="Azure Palace, 456 Ocean Avenue, Miami, FL 33101" 
                       variant="celestial" 
                     />
                   </div>
                   
-                  <div className="glass-card p-6 rounded-lg text-center shadow-lg hover:shadow-xl transition-all">
-                    <h3 className="font-amiri text-2xl text-celestial-tertiary mb-2">Walima Reception</h3>
-                    <p className="font-cormorant text-xl mb-1 text-celestial-tertiary/90">September 20th, 2024</p>
-                    <p className="font-cormorant text-lg mb-2 text-celestial-tertiary/90">7:00 PM</p>
-                    <p className="font-cormorant text-md text-celestial-tertiary/80 mb-3">Azure Palace, Grand Ballroom</p>
+                  <div className="bg-gradient-to-br from-white/20 to-white/10 p-6 rounded-xl backdrop-blur-md border border-white/20 text-center shadow-lg hover:shadow-xl transition-all">
+                    <h3 className="font-amiri text-2xl text-[#e4d48f] mb-2">Walima Reception</h3>
+                    <p className="font-cormorant text-xl mb-1 text-white/90">September 20th, 2024</p>
+                    <p className="font-cormorant text-lg mb-2 text-white/90">7:00 PM</p>
+                    <p className="font-cormorant text-md text-white/80 mb-3">Azure Palace, Grand Ballroom</p>
                     <AddToCalendar 
                       event={EVENT} 
                       variant="celestial" 
@@ -175,7 +190,7 @@ const CelestialImaan: React.FC = () => {
             </div>
             
             {/* Scroll indicator */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-celestial-tertiary opacity-70">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white opacity-70">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -183,7 +198,7 @@ const CelestialImaan: React.FC = () => {
           </section>
 
           {/* Countdown & RSVP Section */}
-          <section className="py-12 md:py-20 bg-gradient-to-b from-celestial-tertiary to-celestial-primary/10 relative overflow-hidden px-4">
+          <section className="py-12 md:py-20 bg-gradient-to-b from-[#f0f8ff] to-[#e1f0fc] relative overflow-hidden px-4">
             <EnhancedPattern variant="celestial" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
@@ -205,22 +220,26 @@ const CelestialImaan: React.FC = () => {
           </section>
 
           {/* Wedding Quiz - Interactive Section */}
-          <section className="py-12 md:py-20 bg-gradient-to-b from-celestial-primary/10 to-celestial-tertiary relative overflow-hidden px-4">
+          <section className="py-12 md:py-20 bg-gradient-to-b from-[#e1f0fc] to-[#c8e3f7] relative overflow-hidden px-4">
             <EnhancedPattern variant="celestial" intensity="light" />
             
             <div className="w-full max-w-3xl mx-auto relative z-10">
               <div className="animate-on-scroll shadow-md hover:shadow-xl transition-all duration-300" data-delay="300">
-                <WeddingQuiz variant="celestial" coupleNames={COUPLE} />
+                <WeddingQuiz 
+                  variant="celestial" 
+                  coupleNames={COUPLE}
+                  onVideoPlay={handleVideoPlay}
+                />
               </div>
             </div>
           </section>
 
           {/* Event Timeline & Special Rituals */}
-          <section className="py-12 md:py-20 bg-gradient-to-b from-celestial-tertiary to-celestial-primary/10 relative overflow-hidden px-4">
+          <section className="py-12 md:py-20 bg-gradient-to-b from-[#c8e3f7] to-[#afd6f5] relative overflow-hidden px-4">
             <EnhancedPattern variant="celestial" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-celestial-accent mb-10 animate-on-scroll" data-delay="300">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#102956] mb-10 animate-on-scroll" data-delay="300">
                 Our Wedding Journey
               </h2>
               
@@ -228,8 +247,8 @@ const CelestialImaan: React.FC = () => {
                 <EventTimeline events={EVENTS} variant="celestial" className="mb-12 celestial-hover-glow" />
               </div>
               
-              <div className="bg-white/30 p-6 md:p-8 rounded-lg backdrop-blur-sm border border-celestial-primary/20 shadow-md hover:shadow-xl transition-all animate-on-scroll" data-delay="900">
-                <h3 className="text-2xl font-playfair text-celestial-accent mb-4 text-center">Special Ritual - The Henna Night</h3>
+              <div className="bg-gradient-to-br from-white/80 to-white/60 p-6 md:p-8 rounded-xl backdrop-blur-sm border border-[#3461ad]/20 shadow-md hover:shadow-xl transition-all animate-on-scroll" data-delay="900">
+                <h3 className="text-2xl font-playfair text-[#102956] mb-4 text-center">Special Ritual - The Henna Night</h3>
                 
                 <div className="flex flex-col md:flex-row gap-6 items-center">
                   <div className="md:w-1/3">
@@ -256,11 +275,11 @@ const CelestialImaan: React.FC = () => {
           </section>
 
           {/* Gallery & Blessings Section */}
-          <section className="py-12 md:py-20 bg-gradient-to-b from-celestial-primary/10 to-celestial-tertiary relative overflow-hidden px-4">
+          <section className="py-12 md:py-20 bg-gradient-to-b from-[#afd6f5] to-[#f0f8ff] relative overflow-hidden px-4">
             <EnhancedPattern variant="celestial" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-celestial-accent mb-10 animate-on-scroll" data-delay="300">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#102956] mb-10 animate-on-scroll" data-delay="300">
                 Our Moments Together
               </h2>
               
@@ -275,7 +294,7 @@ const CelestialImaan: React.FC = () => {
           </section>
 
           {/* Footer */}
-          <footer className="py-10 bg-celestial-accent text-celestial-tertiary">
+          <footer className="py-10 bg-gradient-to-b from-[#102956] to-[#0a1b38] text-white">
             <div className="container mx-auto px-4 text-center">
               <h2 className="font-amiri text-2xl mb-2">Mohammed & Aisha</h2>
               <p className="font-cormorant mb-4">{new Date().getFullYear()}</p>

@@ -49,13 +49,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   const getContainerStyles = () => {
     switch (variant) {
       case 'eternal':
-        return 'bg-eternal-tertiary/60 border-eternal-primary shadow-[0_0_20px_rgba(30,60,40,0.1)]';
+        return 'bg-gradient-to-br from-eternal-tertiary/90 to-eternal-tertiary/70 border-eternal-primary/20 shadow-[0_10px_25px_rgba(30,60,40,0.2)]';
       case 'celestial':
-        return 'bg-celestial-tertiary/60 border-celestial-primary shadow-[0_0_20px_rgba(20,40,80,0.1)]';
+        return 'bg-gradient-to-br from-celestial-tertiary/90 to-celestial-tertiary/70 border-celestial-primary/20 shadow-[0_10px_25px_rgba(20,40,80,0.2)]';
       case 'sacred':
-        return 'bg-sacred-tertiary/50 border-sacred-primary shadow-[0_0_20px_rgba(30,80,80,0.1)]';
+        return 'bg-gradient-to-br from-sacred-tertiary/80 to-sacred-tertiary/60 border-sacred-primary/20 shadow-[0_10px_25px_rgba(30,80,80,0.2)]';
       case 'radiant':
-        return 'bg-radiant-secondary/50 border-radiant-tertiary shadow-[0_0_20px_rgba(40,30,80,0.1)]';
+        return 'bg-gradient-to-br from-radiant-secondary/80 to-radiant-secondary/60 border-radiant-tertiary/20 shadow-[0_10px_25px_rgba(40,30,80,0.2)]';
       default:
         return 'bg-white/80 border-gray-200 shadow-lg';
     }
@@ -79,13 +79,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
   const getNumberStyles = () => {
     switch (variant) {
       case 'eternal':
-        return 'bg-eternal-primary text-eternal-tertiary';
+        return 'bg-gradient-to-br from-eternal-primary to-eternal-primary/90 text-eternal-tertiary';
       case 'celestial':
-        return 'bg-celestial-primary text-celestial-tertiary';
+        return 'bg-gradient-to-br from-celestial-primary to-celestial-accent/90 text-celestial-tertiary';
       case 'sacred':
-        return 'bg-sacred-primary text-sacred-tertiary';
+        return 'bg-gradient-to-br from-sacred-primary to-sacred-secondary/90 text-sacred-tertiary';
       case 'radiant':
-        return 'bg-radiant-primary text-radiant-tertiary';
+        return 'bg-gradient-to-br from-radiant-primary to-radiant-primary/90 text-radiant-tertiary';
       default:
         return 'bg-primary text-primary-foreground';
     }
@@ -93,56 +93,56 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
 
   return (
     <div className={cn(
-      'p-6 rounded-lg backdrop-blur-sm border flex flex-col items-center transition-all',
+      'p-6 rounded-2xl backdrop-blur-sm border-2 flex flex-col items-center transition-all',
       getContainerStyles(),
       className
     )}>
       <h3 className={cn(
-        'text-lg font-medium mb-4 font-cormorant text-center',
+        'text-xl font-medium mb-5 font-cormorant text-center',
         getTextStyles()
       )}>
         {title}
       </h3>
       
-      <div className="grid grid-cols-4 gap-2 sm:gap-4 w-full">
+      <div className="grid grid-cols-4 gap-3 sm:gap-4 w-full">
         <div className="flex flex-col items-center">
           <div className={cn(
-            'w-14 h-14 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center text-2xl sm:text-3xl font-bold',
+            'w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-lg',
             getNumberStyles()
           )}>
             {timeLeft.days}
           </div>
-          <span className="text-xs sm:text-sm mt-1 font-medium opacity-90">Days</span>
+          <span className="text-xs sm:text-sm mt-2 font-medium opacity-90">Days</span>
         </div>
         
         <div className="flex flex-col items-center">
           <div className={cn(
-            'w-14 h-14 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center text-2xl sm:text-3xl font-bold',
+            'w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-lg',
             getNumberStyles()
           )}>
             {timeLeft.hours}
           </div>
-          <span className="text-xs sm:text-sm mt-1 font-medium opacity-90">Hours</span>
+          <span className="text-xs sm:text-sm mt-2 font-medium opacity-90">Hours</span>
         </div>
         
         <div className="flex flex-col items-center">
           <div className={cn(
-            'w-14 h-14 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center text-2xl sm:text-3xl font-bold',
+            'w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-lg',
             getNumberStyles()
           )}>
             {timeLeft.minutes}
           </div>
-          <span className="text-xs sm:text-sm mt-1 font-medium opacity-90">Minutes</span>
+          <span className="text-xs sm:text-sm mt-2 font-medium opacity-90">Minutes</span>
         </div>
         
         <div className="flex flex-col items-center">
           <div className={cn(
-            'w-14 h-14 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center text-2xl sm:text-3xl font-bold',
+            'w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold shadow-lg',
             getNumberStyles()
           )}>
             {timeLeft.seconds}
           </div>
-          <span className="text-xs sm:text-sm mt-1 font-medium opacity-90">Seconds</span>
+          <span className="text-xs sm:text-sm mt-2 font-medium opacity-90">Seconds</span>
         </div>
       </div>
     </div>
