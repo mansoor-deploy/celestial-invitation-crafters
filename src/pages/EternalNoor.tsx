@@ -1,6 +1,8 @@
 
 import React, { useEffect, useState, useRef } from 'react';
-import PageLoader from '@/components/PageLoader';
+import { useIsMobile } from '@/hooks/use-mobile';
+import EnhancedLoader from '@/components/EnhancedLoader';
+import AudioPlayer from '@/components/AudioPlayer';
 import AddToCalendar from '@/components/AddToCalendar';
 import MapLocation from '@/components/MapLocation';
 import CountdownTimer from '@/components/CountdownTimer';
@@ -9,7 +11,8 @@ import BlessingsWall from '@/components/BlessingsWall';
 import PhotoGallery from '@/components/PhotoGallery';
 import EventTimeline from '@/components/EventTimeline';
 import Parallax from '@/components/Parallax';
-import AnimatedPattern from '@/components/AnimatedPattern';
+import EnhancedPattern from '@/components/EnhancedPattern';
+import WeddingQuiz from '@/components/WeddingQuiz';
 import { cn } from '@/lib/utils';
 
 // Example data
@@ -19,6 +22,11 @@ const EVENT = {
   startDate: new Date('2024-08-15T14:00:00'),
   endDate: new Date('2024-08-15T22:00:00'),
   location: "Grand Islamic Center, 123 Crescent St, New York, NY 10001",
+};
+
+const COUPLE = {
+  partner1: "Ahmad",
+  partner2: "Fatima"
 };
 
 const PHOTOS = [
@@ -57,12 +65,13 @@ const EVENTS = [
 const EternalNoor: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const sectionsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Simulate loading assets
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 2000);
+    }, 3500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -78,7 +87,7 @@ const EternalNoor: React.FC = () => {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
     const sections = document.querySelectorAll('.eternal-scroll-reveal > *');
@@ -95,13 +104,15 @@ const EternalNoor: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-eternal-tertiary overflow-x-hidden">
-      <PageLoader template="eternal" />
-
+      <EnhancedLoader template="eternal" />
+      
       {isLoaded && (
         <>
+          <AudioPlayer audioSrc="/audio/background-nasheed.mp3" variant="eternal" />
+          
           {/* Hero Section */}
-          <section className="relative min-h-screen flex flex-col items-center justify-center py-20 overflow-hidden">
-            <AnimatedPattern variant="eternal" className="opacity-5" />
+          <section className="relative min-h-[100vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden">
+            <EnhancedPattern variant="eternal" intensity="medium" />
             
             <Parallax speed={0.2} className="absolute inset-0 pointer-events-none z-0">
               <div className="absolute top-[15%] left-[10%] w-16 h-16 md:w-24 md:h-24 border-2 border-eternal-secondary rounded-full opacity-20 animate-float" />
@@ -110,9 +121,9 @@ const EternalNoor: React.FC = () => {
               <div className="absolute bottom-[30%] right-[25%] w-16 h-16 md:w-28 md:h-28 border-2 border-eternal-primary rounded-full opacity-15 animate-pulse" style={{ animationDelay: '1.5s' }} />
             </Parallax>
 
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="flex flex-col items-center eternal-scroll-reveal">
-                <div className="mb-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-300">
+                <div className="mb-6 opacity-0 transform translate-y-4 transition-all duration-1000 delay-300">
                   <h3 className="text-center font-amiri text-eternal-primary text-xl md:text-2xl mb-2">بسم الله الرحمن الرحيم</h3>
                   <p className="text-center text-eternal-primary/80 font-cormorant text-lg md:text-xl italic">In the name of Allah, the Most Gracious, the Most Merciful</p>
                 </div>
@@ -125,29 +136,29 @@ const EternalNoor: React.FC = () => {
                   <h2 className="font-cormorant text-3xl md:text-4xl text-eternal-accent">Ahmad & Fatima</h2>
                 </div>
                 
-                <div className="mb-12 opacity-0 transform translate-y-4 transition-all duration-1000 delay-700">
+                <div className="mb-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-700">
                   <p className="text-center text-eternal-primary/90 font-cormorant text-xl md:text-2xl">
                     Request the honor of your presence at their wedding celebration
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 max-w-3xl w-full opacity-0 transform translate-y-4 transition-all duration-1000 delay-900">
-                  <div className="bg-white/30 rounded-lg p-6 backdrop-blur-sm border border-eternal-primary/20 text-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-3xl opacity-0 transform translate-y-4 transition-all duration-1000 delay-900">
+                  <div className="bg-white/50 rounded-lg p-5 backdrop-blur-sm border border-eternal-primary/20 text-center shadow-md hover:shadow-lg transition-all">
                     <h3 className="font-amiri text-2xl text-eternal-primary mb-2">Nikah Ceremony</h3>
                     <p className="font-cormorant text-xl mb-1">August 15th, 2024</p>
-                    <p className="font-cormorant text-lg mb-3">2:00 PM</p>
-                    <p className="font-cormorant text-md text-eternal-primary/80 mb-4">Grand Islamic Center</p>
+                    <p className="font-cormorant text-lg mb-2">2:00 PM</p>
+                    <p className="font-cormorant text-md text-eternal-primary/80 mb-3">Grand Islamic Center</p>
                     <MapLocation 
                       address="Grand Islamic Center, 123 Crescent St, New York, NY 10001" 
                       variant="eternal" 
                     />
                   </div>
                   
-                  <div className="bg-white/30 rounded-lg p-6 backdrop-blur-sm border border-eternal-primary/20 text-center">
+                  <div className="bg-white/50 rounded-lg p-5 backdrop-blur-sm border border-eternal-primary/20 text-center shadow-md hover:shadow-lg transition-all">
                     <h3 className="font-amiri text-2xl text-eternal-primary mb-2">Walima Reception</h3>
                     <p className="font-cormorant text-xl mb-1">August 15th, 2024</p>
-                    <p className="font-cormorant text-lg mb-3">6:00 PM</p>
-                    <p className="font-cormorant text-md text-eternal-primary/80 mb-4">Grand Islamic Center - Hall B</p>
+                    <p className="font-cormorant text-lg mb-2">6:00 PM</p>
+                    <p className="font-cormorant text-md text-eternal-primary/80 mb-3">Grand Islamic Center - Hall B</p>
                     <AddToCalendar 
                       event={EVENT} 
                       variant="eternal" 
@@ -156,41 +167,48 @@ const EternalNoor: React.FC = () => {
                 </div>
               </div>
             </div>
+            
+            {/* Scroll indicator */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce opacity-70">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
           </section>
 
           {/* Countdown & RSVP Section */}
-          <section className="py-16 md:py-24 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden">
-            <AnimatedPattern variant="eternal" className="opacity-5" />
+          <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden px-4">
+            <EnhancedPattern variant="eternal" intensity="light" />
             
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="flex flex-col md:flex-row gap-8 lg:gap-12 items-stretch justify-center eternal-scroll-reveal">
-                <div className="flex-1 max-w-lg opacity-0 transform translate-y-4 transition-all duration-1000">
+            <div className="w-full max-w-6xl mx-auto relative z-10">
+              <div className="flex flex-col md:flex-row gap-6 items-stretch justify-center eternal-scroll-reveal">
+                <div className="flex-1 max-w-full md:max-w-lg opacity-0 transform translate-y-4 transition-all duration-1000">
                   <CountdownTimer 
                     date={EVENT.startDate} 
                     title="Counting down to our Nikah" 
                     variant="eternal" 
-                    className="h-full"
+                    className="h-full shadow-md hover:shadow-lg transition-all"
                   />
                 </div>
                 
-                <div className="flex-1 max-w-lg opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
-                  <RSVPForm variant="eternal" className="h-full" />
+                <div className="flex-1 max-w-full md:max-w-lg opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
+                  <RSVPForm variant="eternal" className="h-full shadow-md hover:shadow-lg transition-all" />
                 </div>
               </div>
             </div>
           </section>
 
           {/* Our Story & Timeline Section */}
-          <section className="py-16 md:py-24 bg-gradient-to-b from-eternal-tertiary to-eternal-primary/5 relative overflow-hidden">
-            <AnimatedPattern variant="eternal" className="opacity-5" />
+          <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-tertiary to-eternal-primary/5 relative overflow-hidden px-4">
+            <EnhancedPattern variant="eternal" intensity="light" />
             
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="max-w-4xl mx-auto mb-12 eternal-scroll-reveal">
                 <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-6 opacity-0 transform translate-y-4 transition-all duration-1000">
                   Our Love Story
                 </h2>
                 
-                <div className="bg-white/50 p-6 md:p-8 rounded-lg backdrop-blur-sm border border-eternal-primary/20 opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
+                <div className="bg-white/60 p-6 rounded-lg backdrop-blur-sm border border-eternal-primary/20 shadow-md hover:shadow-lg transition-all opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
                   <p className="font-cormorant text-lg md:text-xl text-gray-700 mb-4 leading-relaxed">
                     Our journey began three years ago when our paths crossed at a mutual friend's Eid celebration. What started as a conversation about our shared love for Islamic architecture blossomed into a deep connection rooted in faith and mutual respect.
                   </p>
@@ -203,28 +221,33 @@ const EternalNoor: React.FC = () => {
                 </div>
               </div>
               
-              <div className="max-w-4xl mx-auto opacity-0 transform translate-y-4 transition-all duration-1000 delay-400 eternal-scroll-reveal">
-                <EventTimeline events={EVENTS} variant="eternal" />
+              <div className="max-w-4xl mx-auto mb-12 opacity-0 transform translate-y-4 transition-all duration-1000 delay-400 eternal-scroll-reveal">
+                <EventTimeline events={EVENTS} variant="eternal" className="shadow-md hover:shadow-lg transition-all" />
+              </div>
+
+              {/* Interactive element - Wedding Quiz */}
+              <div className="max-w-4xl mx-auto opacity-0 transform translate-y-4 transition-all duration-1000 delay-600 eternal-scroll-reveal">
+                <WeddingQuiz variant="eternal" coupleNames={COUPLE} className="shadow-md hover:shadow-lg transition-all" />
               </div>
             </div>
           </section>
 
           {/* Gallery & Blessings Section */}
-          <section className="py-16 md:py-24 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden">
-            <AnimatedPattern variant="eternal" className="opacity-5" />
+          <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden px-4">
+            <EnhancedPattern variant="eternal" intensity="light" />
             
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="max-w-4xl mx-auto mb-12 eternal-scroll-reveal">
+            <div className="w-full max-w-6xl mx-auto relative z-10">
+              <div className="max-w-5xl mx-auto mb-12 eternal-scroll-reveal">
                 <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-8 opacity-0 transform translate-y-4 transition-all duration-1000">
                   Our Moments
                 </h2>
                 
                 <div className="opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
-                  <PhotoGallery photos={PHOTOS} variant="eternal" className="mb-16" />
+                  <PhotoGallery photos={PHOTOS} variant="eternal" className="mb-16 shadow-md hover:shadow-lg transition-all" />
                 </div>
                 
                 <div className="opacity-0 transform translate-y-4 transition-all duration-1000 delay-400">
-                  <BlessingsWall variant="eternal" />
+                  <BlessingsWall variant="eternal" className="shadow-md hover:shadow-lg transition-all" />
                 </div>
               </div>
             </div>
@@ -235,7 +258,7 @@ const EternalNoor: React.FC = () => {
             <div className="container mx-auto px-4 text-center">
               <h2 className="font-amiri text-2xl mb-2">Ahmad & Fatima</h2>
               <p className="font-cormorant mb-4">{new Date().getFullYear()}</p>
-              <p className="font-cormorant text-sm opacity-80">
+              <p className="font-cormorant text-sm opacity-80 max-w-md mx-auto">
                 "And among His Signs is this, that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts." - Quran 30:21
               </p>
             </div>
