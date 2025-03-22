@@ -70,6 +70,7 @@ const EternalNoor: React.FC = () => {
   const isMobile = useIsMobile();
 
   const handleVideoPlay = () => {
+    console.log("Video play triggered, stopping background music");
     setStopBackgroundMusic(true);
   };
 
@@ -220,7 +221,7 @@ const EternalNoor: React.FC = () => {
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="max-w-4xl mx-auto mb-8 eternal-scroll-reveal">
                 <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-6 opacity-0 transform translate-y-4 transition-all duration-1000">
-                  Our Story
+                  Our Journey
                 </h2>
                 
                 <div className="bg-gradient-to-br from-white/70 to-white/50 p-6 rounded-xl backdrop-blur-sm border border-eternal-primary/20 shadow-md hover:shadow-lg transition-all opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
@@ -239,9 +240,19 @@ const EternalNoor: React.FC = () => {
               <div className="max-w-4xl mx-auto mb-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-400 eternal-scroll-reveal">
                 <EventTimeline events={EVENTS} variant="eternal" className="shadow-md hover:shadow-lg transition-all" />
               </div>
+            </div>
+          </section>
 
-              {/* Interactive element - Wedding Quiz */}
-              <div className="max-w-4xl mx-auto opacity-0 transform translate-y-4 transition-all duration-1000 delay-600 eternal-scroll-reveal">
+          {/* Interactive Quiz Section */}
+          <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden px-4">
+            <EnhancedPattern variant="eternal" intensity="light" />
+            
+            <div className="w-full max-w-4xl mx-auto relative z-10 eternal-scroll-reveal">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-8 opacity-0 transform translate-y-4 transition-all duration-1000">
+                Test Your Knowledge
+              </h2>
+              
+              <div className="opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
                 <WeddingQuiz 
                   variant="eternal" 
                   coupleNames={COUPLE} 
@@ -253,7 +264,7 @@ const EternalNoor: React.FC = () => {
           </section>
 
           {/* Gallery & Blessings Section */}
-          <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden px-4">
+          <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-tertiary to-eternal-primary/5 relative overflow-hidden px-4">
             <EnhancedPattern variant="eternal" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">

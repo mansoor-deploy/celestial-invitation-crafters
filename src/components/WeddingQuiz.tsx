@@ -186,6 +186,9 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
           <p className="text-md md:text-lg">
             Test your knowledge about Islamic wedding traditions and discover a <span className="font-bold">special surprise</span> waiting for you at the end!
           </p>
+          <p className="text-sm italic">
+            Complete the quiz to unlock a personal invitation from {coupleNames.partner1} and {coupleNames.partner2}!
+          </p>
           <button 
             onClick={startQuiz}
             className={cn(
@@ -246,7 +249,7 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
               <button 
                 onClick={handleNextQuestion}
                 className={cn(
-                  'self-end px-6 py-2 rounded-md transition-all duration-300 flex items-center gap-2',
+                  'self-center w-full sm:w-auto px-6 py-2 rounded-md transition-all duration-300 flex items-center justify-center gap-2',
                   getButtonStyle()
                 )}
               >
@@ -282,11 +285,12 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
                     onClick={playVideo}
                     className={cn(
                       'px-6 py-2 rounded-md transition-all duration-300 flex items-center justify-center gap-2',
-                      getButtonStyle()
+                      getButtonStyle(),
+                      'animate-pulse'
                     )}
                   >
                     <Video className="w-5 h-5" />
-                    Watch Invitation Video
+                    Watch Special Invitation
                   </button>
                 </div>
               </div>

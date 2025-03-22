@@ -72,6 +72,7 @@ const CelestialImaan: React.FC = () => {
   const mainRef = useRef<HTMLDivElement>(null);
   
   const handleVideoPlay = () => {
+    console.log("Video play triggered, stopping background music");
     setStopBackgroundMusic(true);
   };
 
@@ -98,7 +99,7 @@ const CelestialImaan: React.FC = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const el = entry.target;
+            const el = entry.target as HTMLElement;
             const delay = el.getAttribute('data-delay') || '0';
             setTimeout(() => {
               el.classList.add('animate-fade-in');
@@ -118,7 +119,7 @@ const CelestialImaan: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#102956] via-[#183a7e] to-[#f0f8ff] overflow-x-hidden" ref={mainRef}>
-      {isLoaded && <EnhancedLoader template="celestial" onLoadComplete={handleLoaderComplete} />}
+      {!contentReady && <EnhancedLoader template="celestial" onLoadComplete={handleLoaderComplete} />}
       
       {contentReady && (
         <>
@@ -153,8 +154,8 @@ const CelestialImaan: React.FC = () => {
                   <h1 className="font-playfair text-5xl md:text-7xl font-bold text-white mb-4">
                     Wedded Bliss
                   </h1>
-                  <div className="h-0.5 w-32 bg-[#c0af67] mx-auto mb-4"></div>
-                  <h2 className="font-cormorant text-3xl md:text-4xl text-[#e4d48f]">Mohammed & Aisha</h2>
+                  <div className="h-0.5 w-32 bg-white mx-auto mb-4"></div>
+                  <h2 className="font-cormorant text-3xl md:text-4xl text-white/90">Mohammed & Aisha</h2>
                 </div>
                 
                 <div className="mb-8 animate-on-scroll" data-delay="900">
@@ -165,7 +166,7 @@ const CelestialImaan: React.FC = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full max-w-3xl animate-on-scroll" data-delay="1200">
                   <div className="bg-gradient-to-br from-white/20 to-white/10 p-6 rounded-xl backdrop-blur-md border border-white/20 text-center shadow-lg hover:shadow-xl transition-all">
-                    <h3 className="font-amiri text-2xl text-[#e4d48f] mb-2">Nikah Ceremony</h3>
+                    <h3 className="font-amiri text-2xl text-white mb-2">Nikah Ceremony</h3>
                     <p className="font-cormorant text-xl mb-1 text-white/90">September 20th, 2024</p>
                     <p className="font-cormorant text-lg mb-2 text-white/90">3:00 PM</p>
                     <p className="font-cormorant text-md text-white/80 mb-3">Azure Palace, Main Hall</p>
@@ -176,7 +177,7 @@ const CelestialImaan: React.FC = () => {
                   </div>
                   
                   <div className="bg-gradient-to-br from-white/20 to-white/10 p-6 rounded-xl backdrop-blur-md border border-white/20 text-center shadow-lg hover:shadow-xl transition-all">
-                    <h3 className="font-amiri text-2xl text-[#e4d48f] mb-2">Walima Reception</h3>
+                    <h3 className="font-amiri text-2xl text-white mb-2">Walima Reception</h3>
                     <p className="font-cormorant text-xl mb-1 text-white/90">September 20th, 2024</p>
                     <p className="font-cormorant text-lg mb-2 text-white/90">7:00 PM</p>
                     <p className="font-cormorant text-md text-white/80 mb-3">Azure Palace, Grand Ballroom</p>
@@ -298,7 +299,7 @@ const CelestialImaan: React.FC = () => {
             <div className="container mx-auto px-4 text-center">
               <h2 className="font-amiri text-2xl mb-2">Mohammed & Aisha</h2>
               <p className="font-cormorant mb-4">{new Date().getFullYear()}</p>
-              <p className="font-cormorant text-sm opacity-80 max-w-2xl mx-auto">
+              <p className="font-cormorant text-sm md:text-base opacity-80 max-w-2xl mx-auto px-4">
                 "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought." - Quran 30:21
               </p>
             </div>

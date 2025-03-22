@@ -28,32 +28,55 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    const audio = new Audio(audioSrc);
-    audio.loop = true;
-    audio.volume = volume;
-    audio.preload = 'auto';
-    
-    audio.addEventListener('canplaythrough', () => {
-      setIsLoaded(true);
-      if (autoPlay && !isMobile) {
-        audio.play().catch(() => {
-          console.log('Auto-play prevented by browser policy');
-        });
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audio.loop = true;
+      audio.volume = volume;
+      audio.preload = 'auto';
+      
+      // Debug logs
+      console.log('Audio player initialized with source:', audioSrc);
+      
+      audio.addEventListener('canplaythrough', () => {
+        setIsLoaded(true);
+        console.log('Audio loaded and ready to play');
+        if (autoPlay && !isMobile) {
+          audio.play().catch((err) => {
+            console.log('Auto-play prevented by browser policy:', err);
+          });
+          setIsPlaying(true);
+        }
+      });
+      
+      audio.addEventListener('playing', () => {
+        console.log('Audio is now playing');
         setIsPlaying(true);
-      }
-    });
-    
-    audioRef.current = audio;
-    
-    return () => {
-      audio.pause();
-      audio.src = '';
-    };
+      });
+      
+      audio.addEventListener('pause', () => {
+        console.log('Audio is now paused');
+        setIsPlaying(false);
+      });
+      
+      audio.addEventListener('error', (e) => {
+        console.error('Audio error:', e);
+      });
+      
+      audioRef.current = audio;
+      
+      return () => {
+        console.log('Cleaning up audio player');
+        audio.pause();
+        audio.src = '';
+        audio.remove();
+      };
+    }
   }, [audioSrc, autoPlay, volume, isMobile]);
 
   // Effect to handle external stop playback request
   useEffect(() => {
     if (stopPlayback && isPlaying && audioRef.current) {
+      console.log('External request to stop playback received');
       audioRef.current.pause();
       setIsPlaying(false);
     }
@@ -62,19 +85,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const toggleAudio = () => {
     if (!audioRef.current || !isLoaded) return;
     
+    console.log('Toggle audio button clicked, current state:', isPlaying);
     if (isPlaying) {
       audioRef.current.pause();
-      setIsPlaying(false);
     } else {
       audioRef.current.play().catch(err => {
         console.error('Error playing audio:', err);
       });
-      setIsPlaying(true);
     }
   };
 
   const toggleMute = () => {
     if (!audioRef.current || !isLoaded) return;
+    
+    console.log('Toggling mute, current state:', isMuted);
     
     if (isMuted) {
       audioRef.current.volume = volume;
@@ -101,17 +125,15 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   };
 
   const getVolumeIcon = () => {
-    if (isMuted || !isPlaying) {
+    if (isMuted) {
       return <VolumeX className="w-6 h-6" />;
     } else {
       return isPlaying ? <Volume2 className="w-6 h-6" /> : <Volume1 className="w-6 h-6" />;
     }
   };
 
-  if (!isLoaded) return null;
-
   return (
-    <div className={cn('fixed bottom-6 right-6 z-50', className)}>
+    <div className={cn('fixed bottom-6 right-6 z-50 flex gap-3', className)}>
       <button 
         onClick={toggleAudio}
         className={cn(
@@ -122,6 +144,9 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       >
         {getVolumeIcon()}
       </button>
+      <div className="text-xs font-medium text-gray-500 absolute -top-6 right-0 bg-white/80 px-2 py-1 rounded-md shadow-sm">
+        {isPlaying ? (isMuted ? 'Muted' : 'Playing') : 'Paused'}
+      </div>
     </div>
   );
 };
