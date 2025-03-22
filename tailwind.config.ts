@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,14 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				playfair: ['Playfair Display', 'serif'],
+				cormorant: ['Cormorant Garamond', 'serif'],
+				amiri: ['Amiri', 'serif'],
+				nastaliq: ['Noto Nastaliq Urdu', 'serif'],
+				noto: ['Noto Serif', 'serif'],
+				raleway: ['Raleway', 'sans-serif']
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -52,15 +61,33 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				// Template 1: Eternal Noor
+				eternal: {
+					primary: 'hsl(var(--eternal-primary))',
+					secondary: 'hsl(var(--eternal-secondary))',
+					tertiary: 'hsl(var(--eternal-tertiary))',
+					accent: 'hsl(var(--eternal-accent))'
+				},
+				// Template 2: Celestial Imaan
+				celestial: {
+					primary: 'hsl(var(--celestial-primary))',
+					secondary: 'hsl(var(--celestial-secondary))',
+					tertiary: 'hsl(var(--celestial-tertiary))',
+					accent: 'hsl(var(--celestial-accent))'
+				},
+				// Template 3: Sacred Bond
+				sacred: {
+					primary: 'hsl(var(--sacred-primary))',
+					secondary: 'hsl(var(--sacred-secondary))',
+					tertiary: 'hsl(var(--sacred-tertiary))',
+					accent: 'hsl(var(--sacred-accent))'
+				},
+				// Template 4: Radiant Ummah
+				radiant: {
+					primary: 'hsl(var(--radiant-primary))',
+					secondary: 'hsl(var(--radiant-secondary))',
+					tertiary: 'hsl(var(--radiant-tertiary))',
+					accent: 'hsl(var(--radiant-accent))'
 				}
 			},
 			borderRadius: {
@@ -84,11 +111,63 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				fadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				slideUp: {
+					'0%': { transform: 'translateY(20px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				slideDown: {
+					'0%': { transform: 'translateY(-20px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				slideLeft: {
+					'0%': { transform: 'translateX(20px)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' }
+				},
+				slideRight: {
+					'0%': { transform: 'translateX(-20px)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' }
+				},
+				float: {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				pulse: {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.05)' }
+				},
+				shimmer: {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
+				},
+				rotate: {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fadeIn 0.7s ease-out forwards',
+				'slide-up': 'slideUp 0.7s ease-out forwards',
+				'slide-down': 'slideDown 0.7s ease-out forwards',
+				'slide-left': 'slideLeft 0.7s ease-out forwards',
+				'slide-right': 'slideRight 0.7s ease-out forwards',
+				'float': 'float 6s ease-in-out infinite',
+				'pulse': 'pulse 3s ease-in-out infinite',
+				'shimmer': 'shimmer 3s infinite',
+				'rotate': 'rotate 20s linear infinite',
+				'rotate-slow': 'rotate 40s linear infinite'
+			},
+			backgroundImage: {
+				'eternal-pattern': "url('/patterns/geometric-pattern.svg')",
+				'celestial-pattern': "url('/patterns/constellation-pattern.svg')",
+				'sacred-pattern': "url('/patterns/mosaic-pattern.svg')",
+				'radiant-pattern': "url('/patterns/arabesque-pattern.svg')"
 			}
 		}
 	},
