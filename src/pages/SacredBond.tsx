@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EnhancedLoader from '@/components/EnhancedLoader';
@@ -15,7 +14,6 @@ import EnhancedPattern from '@/components/EnhancedPattern';
 import WeddingQuiz from '@/components/WeddingQuiz';
 import { cn } from '@/lib/utils';
 
-// Example data
 const EVENT = {
   title: "Yusuf & Zainab's Wedding",
   description: "Join us for our Nikah ceremony and Walima celebration.",
@@ -91,11 +89,9 @@ const SacredBond: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
   const isMobile = useIsMobile();
-  // Update the ref type to be explicitly for HTMLDivElement
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
-    // Simulate loading assets
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 3500);
@@ -132,7 +128,6 @@ const SacredBond: React.FC = () => {
   useEffect(() => {
     if (!isLoaded) return;
     
-    // Auto-rotate through stories
     storyTimer.current = setInterval(() => {
       setActiveStoryIndex((prev) => (prev + 1) % OUR_STORY.length);
     }, 8000);
@@ -145,7 +140,6 @@ const SacredBond: React.FC = () => {
   const handleStoryClick = (index: number) => {
     setActiveStoryIndex(index);
     
-    // Reset the auto-rotation timer
     if (storyTimer.current) clearInterval(storyTimer.current);
     storyTimer.current = setInterval(() => {
       setActiveStoryIndex((prev) => (prev + 1) % OUR_STORY.length);
@@ -235,7 +229,6 @@ const SacredBond: React.FC = () => {
               </div>
             </div>
             
-            {/* Scroll indicator */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-sacred-primary opacity-70">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -246,7 +239,7 @@ const SacredBond: React.FC = () => {
           {/* Our Story Section */}
           <section 
             className="py-12 md:py-20 bg-gradient-to-b from-sacred-tertiary to-sacred-primary/5 relative overflow-hidden px-4 transition-all duration-700"
-            ref={(el) => (sectionRefs.current[0] = el)}
+            ref={(el: HTMLDivElement | null) => (sectionRefs.current[0] = el)}
           >
             <EnhancedPattern variant="sacred" intensity="light" />
             
