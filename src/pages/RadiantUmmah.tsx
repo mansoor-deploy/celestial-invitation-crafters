@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EnhancedLoader from '@/components/EnhancedLoader';
@@ -72,11 +71,11 @@ const EVENTS = [
 
 // Dua messages for the banner
 const DUAS = [
-  ""May Allah grant you both happiness and fill your life with barakah."",
-  ""May your bond be blessed with love, compassion, and understanding."",
-  ""May Allah make your marriage a means of mercy and tranquility."",
-  ""May your union be filled with the light of faith and endless blessings."",
-  ""May Allah bless this marriage and keep you firm on the straight path."",
+  "May Allah grant you both happiness and fill your life with barakah.",
+  "May your bond be blessed with love, compassion, and understanding.",
+  "May Allah make your marriage a means of mercy and tranquility.",
+  "May your union be filled with the light of faith and endless blessings.",
+  "May Allah bless this marriage and keep you firm on the straight path.",
 ];
 
 const RadiantUmmah: React.FC = () => {
