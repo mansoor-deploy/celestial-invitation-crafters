@@ -91,6 +91,7 @@ const SacredBond: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
   const isMobile = useIsMobile();
+  // Update the ref type to be explicitly for HTMLDivElement
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   useEffect(() => {
@@ -305,7 +306,7 @@ const SacredBond: React.FC = () => {
           {/* RSVP & Countdown Section */}
           <section 
             className="py-12 md:py-20 bg-gradient-to-b from-sacred-primary/5 to-sacred-tertiary relative overflow-hidden px-4 transition-all duration-700"
-            ref={(el) => (sectionRefs.current[1] = el)}
+            ref={(el: HTMLDivElement | null) => (sectionRefs.current[1] = el)}
           >
             <EnhancedPattern variant="sacred" intensity="light" />
             
@@ -330,7 +331,7 @@ const SacredBond: React.FC = () => {
           {/* Wedding Events Timeline */}
           <section 
             className="py-12 md:py-20 bg-gradient-to-b from-sacred-tertiary to-sacred-primary/5 relative overflow-hidden px-4 transition-all duration-700"
-            ref={(el) => (sectionRefs.current[2] = el)}
+            ref={(el: HTMLDivElement | null) => (sectionRefs.current[2] = el)}
           >
             <EnhancedPattern variant="sacred" intensity="light" />
             
@@ -348,7 +349,7 @@ const SacredBond: React.FC = () => {
           {/* Interactive Quiz Section */}
           <section 
             className="py-12 md:py-20 bg-gradient-to-b from-sacred-primary/5 to-sacred-tertiary relative overflow-hidden px-4 transition-all duration-700"
-            ref={(el) => (sectionRefs.current[3] = el)}
+            ref={(el: HTMLDivElement | null) => (sectionRefs.current[3] = el)}
           >
             <EnhancedPattern variant="sacred" intensity="light" />
             
@@ -362,7 +363,7 @@ const SacredBond: React.FC = () => {
           {/* Photo Gallery & Blessings */}
           <section 
             className="py-12 md:py-20 bg-gradient-to-b from-sacred-tertiary to-sacred-primary/5 relative overflow-hidden px-4 transition-all duration-700"
-            ref={(el) => (sectionRefs.current[4] = el)}
+            ref={(el: HTMLDivElement | null) => (sectionRefs.current[4] = el)}
           >
             <EnhancedPattern variant="sacred" intensity="light" />
             
