@@ -114,7 +114,7 @@ const EternalNoor: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-eternal-tertiary to-[#fcf7eb] overflow-x-hidden">
-      {isLoaded && <EnhancedLoader template="eternal" onLoadComplete={handleLoaderComplete} />}
+      {!contentReady && <EnhancedLoader template="eternal" onLoadComplete={handleLoaderComplete} />}
       
       {contentReady && (
         <>
@@ -257,13 +257,13 @@ const EternalNoor: React.FC = () => {
             <EnhancedPattern variant="eternal" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <div className="max-w-5xl mx-auto mb-12 eternal-scroll-reveal">
+              <div className="max-w-5xl mx-auto eternal-scroll-reveal">
                 <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-8 opacity-0 transform translate-y-4 transition-all duration-1000">
                   Our Moments
                 </h2>
                 
-                <div className="opacity-0 transform translate-y-4 transition-all duration-1000 delay-200">
-                  <PhotoGallery photos={PHOTOS} variant="eternal" className="mb-16 shadow-md hover:shadow-lg transition-all" />
+                <div className="opacity-0 transform translate-y-4 transition-all duration-1000 delay-200 mb-12">
+                  <PhotoGallery photos={PHOTOS} variant="eternal" className="shadow-md hover:shadow-lg transition-all" />
                 </div>
                 
                 <div className="opacity-0 transform translate-y-4 transition-all duration-1000 delay-400">

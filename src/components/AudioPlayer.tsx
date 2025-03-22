@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Music, PauseCircle, PlayCircle } from 'lucide-react';
+import { Volume2, VolumeX, Volume1 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -23,6 +23,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isMobile = useIsMobile();
 
@@ -72,6 +73,18 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     }
   };
 
+  const toggleMute = () => {
+    if (!audioRef.current || !isLoaded) return;
+    
+    if (isMuted) {
+      audioRef.current.volume = volume;
+      setIsMuted(false);
+    } else {
+      audioRef.current.volume = 0;
+      setIsMuted(true);
+    }
+  };
+
   const getButtonStyles = () => {
     switch (variant) {
       case 'eternal':
@@ -87,6 +100,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     }
   };
 
+  const getVolumeIcon = () => {
+    if (isMuted || !isPlaying) {
+      return <VolumeX className="w-6 h-6" />;
+    } else {
+      return isPlaying ? <Volume2 className="w-6 h-6" /> : <Volume1 className="w-6 h-6" />;
+    }
+  };
+
   if (!isLoaded) return null;
 
   return (
@@ -99,11 +120,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         )}
         aria-label={isPlaying ? 'Pause music' : 'Play music'}
       >
-        {isPlaying ? (
-          <PauseCircle className="w-6 h-6" />
-        ) : (
-          <Music className="w-6 h-6" />
-        )}
+        {getVolumeIcon()}
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Check, X, Video } from 'lucide-react';
+import { Check, X, Video, ChevronRight, Gift } from 'lucide-react';
 
 interface Question {
   id: number;
@@ -33,6 +33,7 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [playingVideo, setPlayingVideo] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
   // Generate questions based on couple names
   const questions: Question[] = [
@@ -69,18 +70,21 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
     if (correct) {
       setScore(score + 1);
     }
+  };
+
+  const handleNextQuestion = () => {
+    setSelectedOption(null);
+    setIsCorrect(null);
     
-    // Move to next question after a short delay
-    setTimeout(() => {
-      setSelectedOption(null);
-      setIsCorrect(null);
-      
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-      } else {
-        setShowResult(true);
-      }
-    }, 1500);
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      setShowResult(true);
+    }
+  };
+  
+  const startQuiz = () => {
+    setShowQuiz(true);
   };
 
   const resetQuiz = () => {
@@ -90,6 +94,7 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
     setSelectedOption(null);
     setIsCorrect(null);
     setPlayingVideo(false);
+    setShowQuiz(true);
   };
 
   const playVideo = () => {
@@ -172,7 +177,26 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
         Wedding Trivia Quiz
       </h3>
 
-      {!showResult ? (
+      {!showQuiz ? (
+        <div className="text-center space-y-6 animate-fade-in">
+          <div className="flex justify-center mb-4">
+            <Gift className={cn("w-16 h-16", getHeadingStyle())} />
+          </div>
+          <h4 className="text-lg md:text-xl font-medium">Take Our Islamic Wedding Quiz!</h4>
+          <p className="text-md md:text-lg">
+            Test your knowledge about Islamic wedding traditions and discover a <span className="font-bold">special surprise</span> waiting for you at the end!
+          </p>
+          <button 
+            onClick={startQuiz}
+            className={cn(
+              'px-6 py-2 rounded-md transition-all duration-300',
+              getButtonStyle()
+            )}
+          >
+            Start Quiz
+          </button>
+        </div>
+      ) : !showResult ? (
         <div className="space-y-6">
           <div className="text-center mb-4">
             <span className="text-sm font-medium">Question {currentQuestion + 1}/{questions.length}</span>
@@ -210,12 +234,25 @@ const WeddingQuiz: React.FC<WeddingQuizProps> = ({
           </div>
           
           {selectedOption !== null && (
-            <div className={cn(
-              'p-4 rounded-md border mt-4 animate-fade-in',
-              getTipStyle()
-            )}>
-              <h5 className="font-medium mb-1">Islamic Marriage Tip:</h5>
-              <p>{questions[currentQuestion].tip}</p>
+            <div className="flex flex-col space-y-4">
+              <div className={cn(
+                'p-4 rounded-md border animate-fade-in',
+                getTipStyle()
+              )}>
+                <h5 className="font-medium mb-1">Islamic Marriage Tip:</h5>
+                <p>{questions[currentQuestion].tip}</p>
+              </div>
+              
+              <button 
+                onClick={handleNextQuestion}
+                className={cn(
+                  'self-end px-6 py-2 rounded-md transition-all duration-300 flex items-center gap-2',
+                  getButtonStyle()
+                )}
+              >
+                <span>{currentQuestion < questions.length - 1 ? 'Next Question' : 'See Results'}</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           )}
         </div>
