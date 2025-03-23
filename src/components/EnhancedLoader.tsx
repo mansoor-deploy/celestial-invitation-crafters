@@ -18,15 +18,15 @@ const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [message, setMessage] = useState('Preparing your invitation... Inshallah');
+  const [message, setMessage] = useState('Preparing your invitation...');
 
   useEffect(() => {
     const messages = [
-      'Preparing your invitation... Inshallah',
-      'Adding a touch of elegance... Inshallah',
-      'Arranging floral details... Inshallah',
-      'Finalizing the venue... Inshallah',
-      'Almost ready... Inshallah'
+      'Preparing your invitation...',
+      'Adding a touch of elegance...',
+      'Arranging floral details...',
+      'Finalizing the venue...',
+      'Almost ready...'
     ];
     
     // Simulate loading progress with minimum load time

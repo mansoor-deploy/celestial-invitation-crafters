@@ -15,14 +15,14 @@ const PageLoader: React.FC<PageLoaderProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [loadingMessage, setLoadingMessage] = useState('Loading... Inshallah');
+  const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
   useEffect(() => {
     // Messages to cycle through
     const messages = [
-      'Loading... Inshallah',
-      'Preparing your invitation... Inshallah',
-      'Creating a beautiful experience... Inshallah',
+      'Loading...',
+      'Preparing your invitation...',
+      'Creating a beautiful experience...',
       'Almost ready...'
     ];
     

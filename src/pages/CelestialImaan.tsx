@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EnhancedLoader from '@/components/EnhancedLoader';
@@ -13,9 +12,9 @@ import EventTimeline from '@/components/EventTimeline';
 import Parallax from '@/components/Parallax';
 import EnhancedPattern from '@/components/EnhancedPattern';
 import WeddingQuiz from '@/components/WeddingQuiz';
+import FallingLeaves from '@/components/FallingLeaves';
 import { cn } from '@/lib/utils';
 
-// Example data
 const EVENT = {
   title: "Mohammed & Aisha's Wedding",
   description: "Join us for our Nikah ceremony and Walima celebration.",
@@ -81,7 +80,6 @@ const CelestialImaan: React.FC = () => {
   };
 
   useEffect(() => {
-    // Simulate loading assets
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 1000);
@@ -92,7 +90,6 @@ const CelestialImaan: React.FC = () => {
   useEffect(() => {
     if (!contentReady || !mainRef.current) return;
     
-    // Add scroll animations
     const animatedElements = mainRef.current.querySelectorAll('.animate-on-scroll');
     
     const observer = new IntersectionObserver(
@@ -130,11 +127,11 @@ const CelestialImaan: React.FC = () => {
             stopPlayback={stopBackgroundMusic}
           />
           
-          {/* Hero Section */}
           <section className="relative min-h-[100vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-[#102956]/80 via-[#183a7e]/70 to-[#1e4598]/60 z-0"></div>
             
-            <EnhancedPattern variant="celestial" intensity="medium" />
+            <EnhancedPattern variant="celestial" intensity="medium" breeze={true} />
+            <FallingLeaves variant="celestial" count={20} />
             
             <Parallax speed={0.1} className="absolute inset-0 pointer-events-none z-0">
               <div className="absolute top-[10%] left-[15%] w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#6a8cff] opacity-20 animate-pulse" />
@@ -160,7 +157,7 @@ const CelestialImaan: React.FC = () => {
                 
                 <div className="mb-8 animate-on-scroll" data-delay="900">
                   <p className="text-center text-white/90 font-cormorant text-xl md:text-2xl px-4">
-                    With the grace of Allah, together with our families, we invite you to our wedding celebration
+                    With the grace of Allah, together with our families, we invite you to our wedding celebration, Inshallah
                   </p>
                 </div>
                 
@@ -190,7 +187,6 @@ const CelestialImaan: React.FC = () => {
               </div>
             </div>
             
-            {/* Scroll indicator */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-white opacity-70">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -198,16 +194,16 @@ const CelestialImaan: React.FC = () => {
             </div>
           </section>
 
-          {/* Countdown & RSVP Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-[#f0f8ff] to-[#e1f0fc] relative overflow-hidden px-4">
-            <EnhancedPattern variant="celestial" intensity="light" />
+            <EnhancedPattern variant="celestial" intensity="light" breeze={true} />
+            <FallingLeaves variant="celestial" count={12} />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="flex flex-col md:flex-row gap-6 items-stretch">
                 <div className="flex-1 animate-on-scroll shadow-md hover:shadow-xl transition-all duration-300" data-delay="300">
                   <CountdownTimer 
                     date={EVENT.startDate} 
-                    title="The Celebration Begins In" 
+                    title="The Celebration Begins In, Inshallah" 
                     variant="celestial" 
                     className="h-full celestial-hover-glow"
                   />
@@ -220,9 +216,9 @@ const CelestialImaan: React.FC = () => {
             </div>
           </section>
 
-          {/* Wedding Quiz - Interactive Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-[#e1f0fc] to-[#c8e3f7] relative overflow-hidden px-4">
-            <EnhancedPattern variant="celestial" intensity="light" />
+            <EnhancedPattern variant="celestial" intensity="light" breeze={true} />
+            <FallingLeaves variant="celestial" count={10} />
             
             <div className="w-full max-w-3xl mx-auto relative z-10">
               <div className="animate-on-scroll shadow-md hover:shadow-xl transition-all duration-300" data-delay="300">
@@ -235,13 +231,13 @@ const CelestialImaan: React.FC = () => {
             </div>
           </section>
 
-          {/* Event Timeline & Special Rituals */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-[#c8e3f7] to-[#afd6f5] relative overflow-hidden px-4">
-            <EnhancedPattern variant="celestial" intensity="light" />
+            <EnhancedPattern variant="celestial" intensity="light" breeze={true} />
+            <FallingLeaves variant="celestial" count={8} />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#102956] mb-10 animate-on-scroll" data-delay="300">
-                Our Wedding Journey
+                Our Wedding Journey, Inshallah
               </h2>
               
               <div className="animate-on-scroll shadow-md hover:shadow-xl transition-all duration-300" data-delay="600">
@@ -267,7 +263,7 @@ const CelestialImaan: React.FC = () => {
                       The henna night (or Laylat al-Henna) is a significant pre-wedding tradition where intricate henna designs are applied to the bride's hands and feet. It symbolizes beauty, joy, and offers blessings for the marriage.
                     </p>
                     <p className="font-cormorant text-lg text-gray-800 leading-relaxed">
-                      Female family members and friends gather to celebrate with the bride through music, dancing, and sharing advice for married life. It's a beautiful ceremony of sisterhood and celebration before the wedding day.
+                      Female family members and friends gather to celebrate with the bride through music, dancing, and sharing advice for married life. It's a beautiful ceremony of sisterhood and celebration before the wedding day, Inshallah.
                     </p>
                   </div>
                 </div>
@@ -275,9 +271,9 @@ const CelestialImaan: React.FC = () => {
             </div>
           </section>
 
-          {/* Gallery & Blessings Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-[#afd6f5] to-[#f0f8ff] relative overflow-hidden px-4">
-            <EnhancedPattern variant="celestial" intensity="light" />
+            <EnhancedPattern variant="celestial" intensity="light" breeze={true} />
+            <FallingLeaves variant="celestial" count={15} />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#102956] mb-10 animate-on-scroll" data-delay="300">
@@ -294,7 +290,6 @@ const CelestialImaan: React.FC = () => {
             </div>
           </section>
 
-          {/* Footer */}
           <footer className="py-10 bg-gradient-to-b from-[#102956] to-[#0a1b38] text-white">
             <div className="container mx-auto px-4 text-center">
               <h2 className="font-amiri text-2xl mb-2">Mohammed & Aisha</h2>
@@ -302,6 +297,7 @@ const CelestialImaan: React.FC = () => {
               <p className="font-cormorant text-sm md:text-base opacity-80 max-w-2xl mx-auto px-4">
                 "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought." - Quran 30:21
               </p>
+              <p className="font-amiri text-lg mt-4">We look forward to celebrating with you, Inshallah</p>
             </div>
           </footer>
         </>
