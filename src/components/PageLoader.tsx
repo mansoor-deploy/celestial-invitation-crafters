@@ -91,7 +91,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({
         </div>
       </div>
       <div className="font-cormorant text-xl font-light tracking-widest animate-pulse mt-4">
-        Loading...
+        Loading... Inshallah
       </div>
       
       {/* Progress bar */}

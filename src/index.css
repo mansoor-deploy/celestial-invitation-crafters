@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Serif:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Amiri:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -104,7 +103,6 @@
   }
 }
 
-/* Mobile-friendly adjustments */
 @layer utilities {
   .mobile-container {
     @apply px-4 py-6 md:px-6 md:py-8;
@@ -123,7 +121,6 @@
   }
 }
 
-/* Enhanced audio player */
 .audio-player {
   @apply fixed bottom-6 right-6 z-50 flex items-center;
 }
@@ -132,7 +129,6 @@
   @apply p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center;
 }
 
-/* Shared Animation Keyframes */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -217,7 +213,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Premium Animation Classes */
 .premium-hover {
   transition: all 0.3s ease;
 }
@@ -244,6 +239,47 @@
   animation: textShimmer 3s linear infinite;
 }
 
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+@keyframes breeze {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(1deg) scale(1.01); }
+  50% { transform: rotate(0deg) scale(1); }
+  75% { transform: rotate(-1deg) scale(0.99); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.animate-breeze {
+  animation: breeze 8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.animate-breeze-slow {
+  animation: breeze 12s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.animate-breeze-fast {
+  animation: breeze 5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes leafFalling {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  10% { transform: translateY(0) rotate(5deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+}
+
+.animate-leaf-fall {
+  animation: leafFalling 10s linear forwards;
+}
+
 .text-shadow-gold {
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
@@ -260,7 +296,6 @@
   text-shadow: 0 0 10px rgba(150, 0, 255, 0.5);
 }
 
-/* Pattern Backgrounds */
 .pattern-dots {
   background-image: radial-gradient(currentColor 1px, transparent 1px);
   background-size: calc(10 * 1px) calc(10 * 1px);
@@ -273,7 +308,6 @@
     linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
 }
 
-/* Islamic Patterns */
 .islamic-pattern {
   position: relative;
   overflow: hidden;
@@ -291,7 +325,6 @@
   z-index: -1;
 }
 
-/* Typography Styles */
 .arabic-text {
   font-family: 'Amiri', serif;
   direction: rtl;
@@ -319,7 +352,6 @@
   right: -40px;
 }
 
-/* Shared Component Styles */
 .glass-card {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(7px);
@@ -332,7 +364,6 @@
   color: transparent;
 }
 
-/* Template-specific global styles */
 .eternal-scroll-reveal > * {
   opacity: 0;
   transform: translateY(20px);
@@ -370,7 +401,6 @@
   text-shadow: 0 0 8px rgba(255, 217, 90, 0.7);
 }
 
-/* Luxury gradient backgrounds */
 .luxury-gradient-gold {
   background: linear-gradient(135deg, #f6e27a 0%, #ffd84c 50%, #c6a546 100%);
 }
@@ -395,7 +425,6 @@
   background: linear-gradient(135deg, #332a61 0%, #251f46 50%, #1a1733 100%);
 }
 
-/* Premium Gradients */
 .premium-gold {
   background: linear-gradient(135deg, #f6e27a 0%, #ffd84c 50%, #c6a546 100%);
 }
@@ -414,13 +443,4 @@
 
 .premium-red {
   background: linear-gradient(135deg, #b71c1c 0%, #c62828 50%, #d32f2f 100%);
-}
-
-/* Animation classes */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
 }

@@ -13,6 +13,7 @@ import EventTimeline from '@/components/EventTimeline';
 import Parallax from '@/components/Parallax';
 import EnhancedPattern from '@/components/EnhancedPattern';
 import WeddingQuiz from '@/components/WeddingQuiz';
+import FallingLeaves from '@/components/FallingLeaves';
 import { cn } from '@/lib/utils';
 
 // Example data
@@ -129,6 +130,7 @@ const EternalNoor: React.FC = () => {
           {/* Hero Section */}
           <section className="relative min-h-[100vh] flex flex-col items-center justify-center py-12 px-4 overflow-hidden">
             <EnhancedPattern variant="eternal" intensity="medium" />
+            <FallingLeaves variant="eternal" count={20} />
             
             <Parallax speed={0.2} className="absolute inset-0 pointer-events-none z-0">
               <div className="absolute top-[15%] left-[10%] w-16 h-16 md:w-24 md:h-24 border-2 border-eternal-secondary rounded-full opacity-20 animate-float" />
@@ -154,7 +156,7 @@ const EternalNoor: React.FC = () => {
                 
                 <div className="mb-8 opacity-0 transform translate-y-4 transition-all duration-1000 delay-700">
                   <p className="text-center text-eternal-primary/90 font-cormorant text-xl md:text-2xl">
-                    Request the honor of your presence at their wedding celebration
+                    Request the honor of your presence at their wedding celebration, Inshallah
                   </p>
                 </div>
                 
@@ -195,13 +197,14 @@ const EternalNoor: React.FC = () => {
           {/* Countdown & RSVP Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden px-4">
             <EnhancedPattern variant="eternal" intensity="light" />
+            <FallingLeaves variant="eternal" count={10} />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="flex flex-col md:flex-row gap-6 items-stretch justify-center eternal-scroll-reveal">
                 <div className="flex-1 max-w-full md:max-w-lg opacity-0 transform translate-y-4 transition-all duration-1000">
                   <CountdownTimer 
                     date={EVENT.startDate} 
-                    title="Counting down to our Nikah" 
+                    title="Counting down to our Nikah, Inshallah" 
                     variant="eternal" 
                     className="h-full shadow-md hover:shadow-lg transition-all"
                   />
@@ -217,6 +220,7 @@ const EternalNoor: React.FC = () => {
           {/* Our Story Timeline Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-tertiary to-eternal-primary/5 relative overflow-hidden px-4">
             <EnhancedPattern variant="eternal" intensity="light" />
+            <FallingLeaves variant="eternal" count={15} />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="max-w-4xl mx-auto mb-8 eternal-scroll-reveal">
@@ -232,7 +236,7 @@ const EternalNoor: React.FC = () => {
                     Ahmad proposed during Ramadan last year, after Iftar under the stars, with both of our families present to share in our joy. It was a moment of pure blessing that we will forever cherish.
                   </p>
                   <p className="font-cormorant text-lg md:text-xl text-gray-700 leading-relaxed">
-                    We look forward to beginning our life together, building a home founded on love, compassion, and the teachings of our faith. Insha'Allah, we are grateful to have you witness the start of our journey.
+                    We look forward to beginning our life together, building a home founded on love, compassion, and the teachings of our faith. Inshallah, we are grateful to have you witness the start of our journey.
                   </p>
                 </div>
               </div>
@@ -246,6 +250,7 @@ const EternalNoor: React.FC = () => {
           {/* Interactive Quiz Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-primary/5 to-eternal-tertiary relative overflow-hidden px-4">
             <EnhancedPattern variant="eternal" intensity="light" />
+            <FallingLeaves variant="eternal" count={12} />
             
             <div className="w-full max-w-4xl mx-auto relative z-10 eternal-scroll-reveal">
               <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-eternal-primary mb-8 opacity-0 transform translate-y-4 transition-all duration-1000">
@@ -266,6 +271,7 @@ const EternalNoor: React.FC = () => {
           {/* Gallery & Blessings Section */}
           <section className="py-12 md:py-20 bg-gradient-to-b from-eternal-tertiary to-eternal-primary/5 relative overflow-hidden px-4">
             <EnhancedPattern variant="eternal" intensity="light" />
+            <FallingLeaves variant="eternal" count={15} />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
               <div className="max-w-5xl mx-auto eternal-scroll-reveal">
@@ -292,6 +298,7 @@ const EternalNoor: React.FC = () => {
               <p className="font-cormorant text-sm opacity-80 max-w-md mx-auto">
                 "And among His Signs is this, that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts." - Quran 30:21
               </p>
+              <p className="font-amiri text-lg mt-4 opacity-90">Inshallah we will see you on our special day</p>
             </div>
           </footer>
         </>
