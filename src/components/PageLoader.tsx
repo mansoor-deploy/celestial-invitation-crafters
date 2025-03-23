@@ -18,7 +18,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({
   const [loadingMessage, setLoadingMessage] = useState('Loading...');
 
   useEffect(() => {
-    // Messages to cycle through
+    // Messages to cycle through - removed any "Inshallah" mentions
     const messages = [
       'Loading...',
       'Preparing your invitation...',
