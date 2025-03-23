@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Serif:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Amiri:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -184,6 +185,23 @@
   to { transform: rotate(-360deg); }
 }
 
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+}
+
+@keyframes borderGlow {
+  0% { border-color: rgba(255, 215, 0, 0.3); }
+  50% { border-color: rgba(255, 215, 0, 0.8); }
+  100% { border-color: rgba(255, 215, 0, 0.3); }
+}
+
+@keyframes textShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .loader {
   width: 48px;
   height: 48px;
@@ -197,6 +215,49 @@
 @keyframes rotation {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Premium Animation Classes */
+.premium-hover {
+  transition: all 0.3s ease;
+}
+
+.premium-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.premium-glow {
+  animation: glowPulse 3s infinite;
+}
+
+.border-glow {
+  animation: borderGlow 3s infinite;
+}
+
+.text-shine {
+  background: linear-gradient(to right, #fff 20%, #ffdf78 40%, #ffdf78 60%, #fff 80%);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: textShimmer 3s linear infinite;
+}
+
+.text-shadow-gold {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.text-shadow-blue {
+  text-shadow: 0 0 10px rgba(0, 150, 255, 0.5);
+}
+
+.text-shadow-green {
+  text-shadow: 0 0 10px rgba(0, 150, 100, 0.5);
+}
+
+.text-shadow-purple {
+  text-shadow: 0 0 10px rgba(150, 0, 255, 0.5);
 }
 
 /* Pattern Backgrounds */
@@ -328,6 +389,31 @@
 
 .luxury-gradient-celestial {
   background: linear-gradient(135deg, #001233 0%, #001845 50%, #023e8a 100%);
+}
+
+.luxury-gradient-radiant {
+  background: linear-gradient(135deg, #332a61 0%, #251f46 50%, #1a1733 100%);
+}
+
+/* Premium Gradients */
+.premium-gold {
+  background: linear-gradient(135deg, #f6e27a 0%, #ffd84c 50%, #c6a546 100%);
+}
+
+.premium-purple {
+  background: linear-gradient(135deg, #332a61 0%, #251f46 50%, #1a1733 100%);
+}
+
+.premium-blue {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #303f9f 100%);
+}
+
+.premium-green {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+}
+
+.premium-red {
+  background: linear-gradient(135deg, #b71c1c 0%, #c62828 50%, #d32f2f 100%);
 }
 
 /* Animation classes */

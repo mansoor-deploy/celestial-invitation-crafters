@@ -6,9 +6,15 @@ interface EnhancedLoaderProps {
   className?: string;
   template: 'eternal' | 'celestial' | 'sacred' | 'radiant';
   onLoadComplete?: () => void;
+  minLoadTime?: number; // Minimum loading time in milliseconds
 }
 
-const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ className, template, onLoadComplete }) => {
+const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ 
+  className, 
+  template, 
+  onLoadComplete,
+  minLoadTime = 3000 // Default to 3 seconds minimum loading time
+}) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState('Preparing your invitation...');
@@ -22,10 +28,17 @@ const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ className, template, on
       'Almost ready...'
     ];
     
-    // Simulate loading progress
+    // Simulate loading progress with minimum load time
     let currentProgress = 0;
+    const startTime = Date.now();
+    
     const interval = setInterval(() => {
-      currentProgress += Math.random() * 15;
+      // Calculate elapsed time as a percentage of minLoadTime
+      const elapsedTime = Date.now() - startTime;
+      const timeProgress = Math.min((elapsedTime / minLoadTime) * 100, 100);
+      
+      // Add some randomness but ensure we're at least following the time progress
+      currentProgress = Math.max(timeProgress, currentProgress + Math.random() * 10);
       if (currentProgress > 100) currentProgress = 100;
       
       setProgress(Math.floor(currentProgress));
@@ -43,10 +56,10 @@ const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({ className, template, on
           }
         }, 500);
       }
-    }, 400);
+    }, 300);
 
     return () => clearInterval(interval);
-  }, [onLoadComplete]);
+  }, [onLoadComplete, minLoadTime]);
 
   const getLoaderStyles = () => {
     switch (template) {

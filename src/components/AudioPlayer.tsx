@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AudioPlayerProps {
-  audioSrc: string;
+  audioSrc?: string;
   variant?: 'eternal' | 'celestial' | 'sacred' | 'radiant';
   className?: string;
   autoPlay?: boolean;
@@ -14,10 +14,10 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({
-  audioSrc,
+  audioSrc = "https://ia600601.us.archive.org/20/items/Zain2017/Good-Day.mp3", // Default to the specified nasheed
   variant = 'eternal',
   className,
-  autoPlay = false,
+  autoPlay = true,
   volume = 0.4,
   stopPlayback = false,
 }) => {
@@ -135,12 +135,12 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   return (
     <div className={cn('fixed bottom-6 right-6 z-50 flex gap-3', className)}>
       <button 
-        onClick={toggleAudio}
+        onClick={toggleMute}
         className={cn(
           'p-3 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center',
           getButtonStyles()
         )}
-        aria-label={isPlaying ? 'Pause music' : 'Play music'}
+        aria-label={isMuted ? 'Unmute music' : 'Mute music'}
       >
         {getVolumeIcon()}
       </button>

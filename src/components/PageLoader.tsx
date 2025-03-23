@@ -5,26 +5,44 @@ import { cn } from '@/lib/utils';
 interface PageLoaderProps {
   className?: string;
   template: 'eternal' | 'celestial' | 'sacred' | 'radiant';
+  minLoadTime?: number; // Minimum loading time in milliseconds
 }
 
-const PageLoader: React.FC<PageLoaderProps> = ({ className, template }) => {
+const PageLoader: React.FC<PageLoaderProps> = ({ 
+  className, 
+  template,
+  minLoadTime = 2000 // Default to 2 seconds minimum loading time
+}) => {
   const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Simulate loading time (minimum 1.5 seconds for visual effect)
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
+    // Simulate loading time with minimum duration
+    const startTime = Date.now();
+    
+    const interval = setInterval(() => {
+      const elapsedTime = Date.now() - startTime;
+      const percentage = Math.min((elapsedTime / minLoadTime) * 100, 100);
+      
+      setProgress(Math.floor(percentage));
+      
+      if (percentage >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          setLoading(false);
+        }, 300);
+      }
+    }, 100);
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => clearInterval(interval);
+  }, [minLoadTime]);
 
   const getLoaderStyles = () => {
     switch (template) {
       case 'eternal':
         return 'border-t-eternal-secondary border-eternal-primary/30';
       case 'celestial':
-        return 'border-t-celestial-primary border-celestial-secondary/30';
+        return 'border-t-celestial-tertiary border-celestial-primary/30';
       case 'sacred':
         return 'border-t-sacred-tertiary border-sacred-primary/30';
       case 'radiant':
@@ -74,6 +92,14 @@ const PageLoader: React.FC<PageLoaderProps> = ({ className, template }) => {
       </div>
       <div className="font-cormorant text-xl font-light tracking-widest animate-pulse mt-4">
         Loading...
+      </div>
+      
+      {/* Progress bar */}
+      <div className="w-48 bg-white/10 rounded-full h-1 mt-4 overflow-hidden">
+        <div 
+          className="h-full rounded-full bg-white/30 transition-all duration-300 ease-out"
+          style={{ width: `${progress}%` }}
+        ></div>
       </div>
     </div>
   );

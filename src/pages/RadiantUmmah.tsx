@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EnhancedLoader from '@/components/EnhancedLoader';
@@ -80,6 +81,7 @@ const DUAS = [
 
 const RadiantUmmah: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
   const [activeDua, setActiveDua] = useState(0);
   const isMobile = useIsMobile();
@@ -97,13 +99,18 @@ const RadiantUmmah: React.FC = () => {
     // Simulate loading assets
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 3500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
 
+  // Handle loader completion
+  const handleLoaderComplete = () => {
+    setContentReady(true);
+  };
+
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!contentReady) return;
     
     // Track sections for navigation
     const handleScroll = () => {
@@ -133,7 +140,7 @@ const RadiantUmmah: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(duaInterval);
     };
-  }, [isLoaded]);
+  }, [contentReady]);
 
   const scrollToSection = (index: number) => {
     if (!sectionRefs.current[index]) return;
@@ -145,15 +152,25 @@ const RadiantUmmah: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-radiant-secondary overflow-x-hidden">
-      <EnhancedLoader template="radiant" />
+    <div className="min-h-screen bg-gradient-to-b from-[#332a61] to-[#251f46] overflow-x-hidden">
+      {!contentReady && (
+        <EnhancedLoader 
+          template="radiant" 
+          onLoadComplete={handleLoaderComplete}
+          minLoadTime={3500}
+        />
+      )}
       
-      {isLoaded && (
+      {contentReady && (
         <>
-          <AudioPlayer audioSrc="/audio/background-nasheed.mp3" variant="radiant" />
+          <AudioPlayer 
+            audioSrc="https://ia600601.us.archive.org/20/items/Zain2017/Good-Day.mp3"
+            variant="radiant" 
+            autoPlay={true}
+          />
           
           {/* Fixed Navigation */}
-          <nav className="fixed top-0 left-0 w-full bg-radiant-primary/90 backdrop-blur-md z-50 text-radiant-secondary">
+          <nav className="fixed top-0 left-0 w-full bg-[#251f46]/90 backdrop-blur-md z-50 text-[#f7d77c]">
             <div className="max-w-6xl mx-auto px-4">
               <div className="flex items-center justify-between h-16">
                 <div className="font-amiri text-xl">Omar & Amina</div>
@@ -166,8 +183,8 @@ const RadiantUmmah: React.FC = () => {
                         onClick={() => scrollToSection(index)}
                         className={`font-cormorant text-lg transition-all duration-300 ${
                           currentSection === index 
-                            ? 'text-radiant-tertiary font-medium'
-                            : 'text-radiant-secondary/90 hover:text-radiant-tertiary'
+                            ? 'text-[#f7d77c] font-medium scale-105'
+                            : 'text-[#e0c978]/90 hover:text-[#f7d77c] hover:scale-105'
                         }`}
                       >
                         {section.title}
@@ -176,16 +193,16 @@ const RadiantUmmah: React.FC = () => {
                   </div>
                 ) : (
                   <div className="relative group">
-                    <button className="flex items-center gap-1 text-radiant-tertiary">
+                    <button className="flex items-center gap-1 text-[#f7d77c]">
                       <span>{sections[currentSection].title}</span>
                       <ChevronDown size={16} />
                     </button>
-                    <div className="absolute right-0 w-36 mt-2 bg-radiant-primary border border-radiant-tertiary/20 rounded-md shadow-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                    <div className="absolute right-0 w-36 mt-2 bg-[#251f46] border border-[#f7d77c]/20 rounded-md shadow-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                       {sections.map((section, index) => (
                         <button
                           key={section.id}
                           onClick={() => scrollToSection(index)}
-                          className="block w-full text-left px-4 py-2 hover:bg-radiant-primary/80 transition-colors"
+                          className="block w-full text-left px-4 py-2 hover:bg-[#332a61] transition-colors text-[#e0c978]"
                         >
                           {section.title}
                         </button>
@@ -198,7 +215,7 @@ const RadiantUmmah: React.FC = () => {
           </nav>
           
           {/* Dua Banner */}
-          <div className="bg-radiant-primary/20 backdrop-blur-sm text-radiant-primary border-y border-radiant-primary/10 py-2 px-4 fixed bottom-0 left-0 w-full z-40">
+          <div className="bg-[#251f46]/80 backdrop-blur-sm text-[#f7d77c] border-y border-[#f7d77c]/10 py-2 px-4 fixed bottom-0 left-0 w-full z-40">
             <div className="max-w-6xl mx-auto">
               <div className="overflow-hidden h-6">
                 <div 
@@ -215,7 +232,7 @@ const RadiantUmmah: React.FC = () => {
           
           {/* Hero Section */}
           <section 
-            className="min-h-[100vh] pt-16 flex flex-col items-center justify-center py-12 px-4 overflow-hidden bg-gradient-to-b from-radiant-primary/40 via-radiant-primary/20 to-transparent"
+            className="min-h-[100vh] pt-16 flex flex-col items-center justify-center py-12 px-4 overflow-hidden bg-gradient-to-b from-[#332a61]/80 via-[#2d2554]/60 to-transparent"
             ref={(el) => (sectionRefs.current[0] = el as HTMLElement)}
             id="home"
           >
@@ -224,17 +241,17 @@ const RadiantUmmah: React.FC = () => {
             <Parallax speed={0.1} className="absolute inset-0 pointer-events-none z-0">
               <div className="absolute top-1/3 right-1/4 w-16 h-16 md:w-24 md:h-24 opacity-10">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M50,0 L95,50 L50,100 L5,50 Z" stroke="currentColor" strokeWidth="1" className="text-radiant-tertiary" />
+                  <path d="M50,0 L95,50 L50,100 L5,50 Z" stroke="currentColor" strokeWidth="1" className="text-[#f7d77c]" />
                 </svg>
               </div>
               <div className="absolute bottom-1/4 left-1/5 w-24 h-24 md:w-32 md:h-32 opacity-10">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1" className="text-radiant-tertiary" />
+                  <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1" className="text-[#f7d77c]" />
                 </svg>
               </div>
               <div className="absolute top-2/3 right-1/6 w-20 h-20 md:w-28 md:h-28 opacity-10">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M50,10 C50,35 35,50 10,50 C35,50 50,65 50,90 C50,65 65,50 90,50 C65,50 50,35 50,10 Z" stroke="currentColor" strokeWidth="1" className="text-radiant-tertiary" />
+                  <path d="M50,10 C50,35 35,50 10,50 C35,50 50,65 50,90 C50,65 65,50 90,50 C65,50 50,35 50,10 Z" stroke="currentColor" strokeWidth="1" className="text-[#f7d77c]" />
                 </svg>
               </div>
             </Parallax>
@@ -245,26 +262,26 @@ const RadiantUmmah: React.FC = () => {
                   className="mb-6 opacity-0 animate-fade-in"
                   style={{ animationDelay: '0.3s' }}
                 >
-                  <h3 className="text-center font-amiri text-radiant-tertiary text-xl md:text-2xl mb-2">بسم الله الرحمن الرحيم</h3>
-                  <p className="text-center text-radiant-tertiary/90 font-cormorant text-lg md:text-xl italic">In the name of Allah, the Most Gracious, the Most Merciful</p>
+                  <h3 className="text-center font-amiri text-[#f7d77c] text-xl md:text-2xl mb-2">بسم الله الرحمن الرحيم</h3>
+                  <p className="text-center text-[#e0c978] font-cormorant text-lg md:text-xl italic">In the name of Allah, the Most Gracious, the Most Merciful</p>
                 </div>
                 
                 <div 
                   className="text-center mb-6 opacity-0 animate-fade-in"
                   style={{ animationDelay: '0.6s' }}
                 >
-                  <h1 className="font-playfair text-5xl md:text-7xl font-bold text-radiant-tertiary mb-4">
+                  <h1 className="font-playfair text-5xl md:text-7xl font-bold text-[#f7d77c] mb-4 hover:text-shadow-gold transition-all duration-300">
                     Radiant Union
                   </h1>
-                  <div className="h-0.5 w-32 bg-radiant-tertiary mx-auto mb-4"></div>
-                  <h2 className="font-cormorant text-3xl md:text-4xl text-radiant-tertiary">Omar & Amina</h2>
+                  <div className="h-0.5 w-32 bg-[#f7d77c] mx-auto mb-4"></div>
+                  <h2 className="font-cormorant text-3xl md:text-4xl text-[#e0c978]">Omar & Amina</h2>
                 </div>
                 
                 <div 
                   className="mb-8 opacity-0 animate-fade-in"
                   style={{ animationDelay: '0.9s' }}
                 >
-                  <p className="text-center text-radiant-tertiary/90 font-cormorant text-xl md:text-2xl max-w-2xl mx-auto px-4">
+                  <p className="text-center text-[#e0c978] font-cormorant text-xl md:text-2xl max-w-2xl mx-auto px-4">
                     With hearts full of gratitude to Allah, we invite you to share in our joy as we unite in marriage
                   </p>
                 </div>
@@ -275,7 +292,7 @@ const RadiantUmmah: React.FC = () => {
                 >
                   <button 
                     onClick={() => scrollToSection(1)} 
-                    className="bg-radiant-tertiary text-radiant-primary px-6 py-3 rounded-md font-medium hover:bg-radiant-tertiary/90 transition-colors shadow-md hover:shadow-lg"
+                    className="bg-[#f7d77c] text-[#251f46] px-6 py-3 rounded-md font-medium hover:bg-[#e0c978] transition-colors shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
                   >
                     View Invitation
                   </button>
@@ -285,7 +302,7 @@ const RadiantUmmah: React.FC = () => {
             
             {/* Scroll indicator */}
             <div 
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-radiant-tertiary opacity-70 opacity-0 animate-fade-in"
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-[#f7d77c] opacity-70 opacity-0 animate-fade-in"
               style={{ animationDelay: '1.5s' }}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -296,55 +313,55 @@ const RadiantUmmah: React.FC = () => {
 
           {/* Invitation Details Section */}
           <section 
-            className="py-20 px-4 bg-gradient-to-b from-radiant-primary/10 to-radiant-secondary relative overflow-hidden"
+            className="py-20 px-4 bg-gradient-to-b from-[#251f46]/10 to-[#332a61]/30 relative overflow-hidden"
             ref={(el) => (sectionRefs.current[1] = el as HTMLElement)}
             id="invitation"
           >
             <EnhancedPattern variant="radiant" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-radiant-primary mb-10 opacity-0 animate-fade-in">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#f7d77c] mb-10 opacity-0 animate-fade-in">
                 Wedding Invitation
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                <div className="bg-white/50 rounded-lg p-6 backdrop-blur-sm border border-radiant-primary/20 text-center shadow-md hover:shadow-lg transition-all">
-                  <h3 className="font-amiri text-2xl text-radiant-primary mb-2">Nikah Ceremony</h3>
-                  <p className="font-cormorant text-xl mb-1">November 18th, 2024</p>
-                  <p className="font-cormorant text-lg mb-2">3:00 PM</p>
-                  <p className="font-cormorant text-md text-radiant-primary/80 mb-3">Royal Masjid Hall, Main Prayer Hall</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+                <div className="bg-[#332a61]/50 rounded-lg p-6 backdrop-blur-sm border border-[#f7d77c]/20 text-center shadow-md hover:shadow-xl transition-all hover:scale-105 duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                  <h3 className="font-amiri text-2xl text-[#f7d77c] mb-2">Nikah Ceremony</h3>
+                  <p className="font-cormorant text-xl mb-1 text-[#e0c978]">November 18th, 2024</p>
+                  <p className="font-cormorant text-lg mb-2 text-[#e0c978]">3:00 PM</p>
+                  <p className="font-cormorant text-md text-[#cdb982] mb-3">Royal Masjid Hall, Main Prayer Hall</p>
                   <div className="mb-4">
                     <MapLocation 
                       address="Royal Masjid Hall, 321 Gold Ave, Dallas, TX 75001" 
                       variant="radiant" 
                     />
                   </div>
-                  <div className="text-sm text-gray-600 mt-4 border-t border-radiant-primary/10 pt-4">
+                  <div className="text-sm text-[#e0c978] mt-4 border-t border-[#f7d77c]/10 pt-4">
                     <p className="mb-2"><span className="font-medium">Dress Code:</span> Formal Islamic attire</p>
                     <p><span className="font-medium">Note:</span> Separate seating for men and women</p>
                   </div>
                 </div>
                 
-                <div className="bg-white/50 rounded-lg p-6 backdrop-blur-sm border border-radiant-primary/20 text-center shadow-md hover:shadow-lg transition-all">
-                  <h3 className="font-amiri text-2xl text-radiant-primary mb-2">Walima Reception</h3>
-                  <p className="font-cormorant text-xl mb-1">November 18th, 2024</p>
-                  <p className="font-cormorant text-lg mb-2">7:00 PM</p>
-                  <p className="font-cormorant text-md text-radiant-primary/80 mb-3">Royal Masjid Hall, Celebration Ballroom</p>
+                <div className="bg-[#332a61]/50 rounded-lg p-6 backdrop-blur-sm border border-[#f7d77c]/20 text-center shadow-md hover:shadow-xl transition-all hover:scale-105 duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+                  <h3 className="font-amiri text-2xl text-[#f7d77c] mb-2">Walima Reception</h3>
+                  <p className="font-cormorant text-xl mb-1 text-[#e0c978]">November 18th, 2024</p>
+                  <p className="font-cormorant text-lg mb-2 text-[#e0c978]">7:00 PM</p>
+                  <p className="font-cormorant text-md text-[#cdb982] mb-3">Royal Masjid Hall, Celebration Ballroom</p>
                   <div className="mb-4">
                     <AddToCalendar 
                       event={EVENT} 
                       variant="radiant" 
                     />
                   </div>
-                  <div className="text-sm text-gray-600 mt-4 border-t border-radiant-primary/10 pt-4">
+                  <div className="text-sm text-[#e0c978] mt-4 border-t border-[#f7d77c]/10 pt-4">
                     <p className="mb-2"><span className="font-medium">Dinner:</span> Full buffet with halal options</p>
                     <p><span className="font-medium">Note:</span> Family-friendly celebration</p>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 opacity-0 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-                <div className="shadow-md hover:shadow-lg transition-all">
+              <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+                <div className="shadow-md hover:shadow-xl transition-all hover:scale-105 duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.9s' }}>
                   <CountdownTimer 
                     date={EVENT.startDate} 
                     title="Counting Down to our Special Day" 
@@ -352,7 +369,7 @@ const RadiantUmmah: React.FC = () => {
                   />
                 </div>
                 
-                <div className="shadow-md hover:shadow-lg transition-all">
+                <div className="shadow-md hover:shadow-xl transition-all hover:scale-105 duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '1.2s' }}>
                   <WeddingQuiz variant="radiant" coupleNames={COUPLE} />
                 </div>
               </div>
@@ -361,47 +378,47 @@ const RadiantUmmah: React.FC = () => {
 
           {/* Events Section */}
           <section 
-            className="py-20 px-4 bg-gradient-to-b from-radiant-secondary to-radiant-primary/10 relative overflow-hidden"
+            className="py-20 px-4 bg-gradient-to-b from-[#332a61]/30 to-[#251f46]/20 relative overflow-hidden"
             ref={(el) => (sectionRefs.current[2] = el as HTMLElement)}
             id="events"
           >
             <EnhancedPattern variant="radiant" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-radiant-primary mb-10 opacity-0 animate-fade-in">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#f7d77c] mb-10 opacity-0 animate-fade-in">
                 Wedding Events
               </h2>
               
-              <div className="shadow-md hover:shadow-lg transition-all opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="shadow-md hover:shadow-xl transition-all hover:scale-[1.02] duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <EventTimeline events={EVENTS} variant="radiant" />
               </div>
               
-              <div className="mt-16 bg-white/60 p-6 md:p-8 rounded-lg backdrop-blur-sm border border-radiant-primary/20 shadow-md opacity-0 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-                <h3 className="text-2xl font-playfair text-radiant-primary mb-6 text-center">Our Love Story</h3>
+              <div className="mt-16 bg-[#332a61]/60 p-6 md:p-8 rounded-lg backdrop-blur-sm border border-[#f7d77c]/20 shadow-md hover:shadow-xl transition-all opacity-0 animate-fade-in hover:scale-[1.02] duration-300 transform" style={{ animationDelay: '0.6s' }}>
+                <h3 className="text-2xl font-playfair text-[#f7d77c] mb-6 text-center">Our Love Story</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
-                    <div className="rounded-full bg-radiant-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-radiant-primary text-2xl font-semibold">1</span>
+                    <div className="rounded-full bg-[#f7d77c]/20 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <span className="text-[#f7d77c] text-2xl font-semibold">1</span>
                     </div>
-                    <h4 className="font-medium text-lg mb-2">How We Met</h4>
-                    <p className="text-gray-700">We first met at an Islamic charity event where we were both volunteers. Our shared values and commitment to serving others created an immediate connection.</p>
+                    <h4 className="font-medium text-lg mb-2 text-[#f7d77c]">How We Met</h4>
+                    <p className="text-[#e0c978]">We first met at an Islamic charity event where we were both volunteers. Our shared values and commitment to serving others created an immediate connection.</p>
                   </div>
                   
                   <div className="text-center">
-                    <div className="rounded-full bg-radiant-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-radiant-primary text-2xl font-semibold">2</span>
+                    <div className="rounded-full bg-[#f7d77c]/20 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <span className="text-[#f7d77c] text-2xl font-semibold">2</span>
                     </div>
-                    <h4 className="font-medium text-lg mb-2">Our Journey</h4>
-                    <p className="text-gray-700">After a traditional courtship with our families' involvement, we discovered our compatibility and shared dreams for building a life centered on faith.</p>
+                    <h4 className="font-medium text-lg mb-2 text-[#f7d77c]">Our Journey</h4>
+                    <p className="text-[#e0c978]">After a traditional courtship with our families' involvement, we discovered our compatibility and shared dreams for building a life centered on faith.</p>
                   </div>
                   
                   <div className="text-center">
-                    <div className="rounded-full bg-radiant-primary/10 w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                      <span className="text-radiant-primary text-2xl font-semibold">3</span>
+                    <div className="rounded-full bg-[#f7d77c]/20 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <span className="text-[#f7d77c] text-2xl font-semibold">3</span>
                     </div>
-                    <h4 className="font-medium text-lg mb-2">The Proposal</h4>
-                    <p className="text-gray-700">Omar proposed during Ramadan after receiving the blessings of both families. It was a beautiful moment that honored our faith and traditions.</p>
+                    <h4 className="font-medium text-lg mb-2 text-[#f7d77c]">The Proposal</h4>
+                    <p className="text-[#e0c978]">Omar proposed during Ramadan after receiving the blessings of both families. It was a beautiful moment that honored our faith and traditions.</p>
                   </div>
                 </div>
               </div>
@@ -410,22 +427,22 @@ const RadiantUmmah: React.FC = () => {
 
           {/* Gallery Section */}
           <section 
-            className="py-20 px-4 bg-gradient-to-b from-radiant-primary/10 to-radiant-secondary relative overflow-hidden"
+            className="py-20 px-4 bg-gradient-to-b from-[#251f46]/20 to-[#332a61]/30 relative overflow-hidden"
             ref={(el) => (sectionRefs.current[3] = el as HTMLElement)}
             id="gallery"
           >
             <EnhancedPattern variant="radiant" intensity="light" />
             
             <div className="w-full max-w-6xl mx-auto relative z-10">
-              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-radiant-primary mb-10 opacity-0 animate-fade-in">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#f7d77c] mb-10 opacity-0 animate-fade-in">
                 Photo Gallery
               </h2>
               
-              <div className="shadow-md hover:shadow-lg transition-all opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="shadow-md hover:shadow-xl transition-all hover:scale-[1.02] duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <PhotoGallery photos={PHOTOS} variant="radiant" />
               </div>
               
-              <div className="mt-16 shadow-md hover:shadow-lg transition-all opacity-0 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+              <div className="mt-16 shadow-md hover:shadow-xl transition-all hover:scale-[1.02] duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                 <BlessingsWall variant="radiant" />
               </div>
             </div>
@@ -433,29 +450,29 @@ const RadiantUmmah: React.FC = () => {
 
           {/* RSVP Section */}
           <section 
-            className="py-20 px-4 bg-gradient-to-b from-radiant-secondary to-radiant-primary/10 relative overflow-hidden"
+            className="py-20 px-4 bg-gradient-to-b from-[#332a61]/30 to-[#251f46]/40 relative overflow-hidden"
             ref={(el) => (sectionRefs.current[4] = el as HTMLElement)}
             id="rsvp"
           >
             <EnhancedPattern variant="radiant" intensity="light" />
             
             <div className="w-full max-w-3xl mx-auto relative z-10">
-              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-radiant-primary mb-10 opacity-0 animate-fade-in">
+              <h2 className="text-center font-playfair text-3xl md:text-4xl font-bold text-[#f7d77c] mb-10 opacity-0 animate-fade-in">
                 RSVP
               </h2>
               
-              <div className="shadow-md hover:shadow-lg transition-all opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="shadow-md hover:shadow-xl transition-all hover:scale-105 duration-300 transform opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                 <RSVPForm variant="radiant" />
               </div>
             </div>
           </section>
 
           {/* Footer */}
-          <footer className="py-10 bg-radiant-primary text-radiant-tertiary mt-12">
+          <footer className="py-10 bg-[#251f46] text-[#f7d77c] mt-12">
             <div className="container mx-auto px-4 text-center">
               <h2 className="font-amiri text-2xl mb-2">Omar & Amina</h2>
               <p className="font-cormorant mb-4">{new Date().getFullYear()}</p>
-              <p className="font-cormorant text-sm opacity-80 max-w-2xl mx-auto">
+              <p className="font-cormorant text-sm opacity-80 max-w-2xl mx-auto px-4 md:px-0">
                 "And of His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought." - Quran 30:21
               </p>
               
