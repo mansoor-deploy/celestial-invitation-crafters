@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import FallingLeaves from './FallingLeaves';
 
 interface EnhancedLoaderProps {
   className?: string;
@@ -17,15 +18,15 @@ const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [message, setMessage] = useState('Preparing your invitation...');
+  const [message, setMessage] = useState('Preparing your invitation... Inshallah');
 
   useEffect(() => {
     const messages = [
-      'Preparing your invitation...',
-      'Adding a touch of elegance...',
-      'Arranging floral details...',
-      'Finalizing the venue...',
-      'Almost ready...'
+      'Preparing your invitation... Inshallah',
+      'Adding a touch of elegance... Inshallah',
+      'Arranging floral details... Inshallah',
+      'Finalizing the venue... Inshallah',
+      'Almost ready... Inshallah'
     ];
     
     // Simulate loading progress with minimum load time
@@ -116,6 +117,9 @@ const EnhancedLoader: React.FC<EnhancedLoaderProps> = ({
         className
       )}
     >
+      {/* Add falling leaves effect based on template */}
+      <FallingLeaves variant={template} count={15} />
+      
       <div className="w-72 md:w-96 flex flex-col items-center">
         {/* Animated ornament */}
         <div className="relative w-24 h-24 mb-8">

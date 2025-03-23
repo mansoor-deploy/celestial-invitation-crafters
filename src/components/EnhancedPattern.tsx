@@ -1,104 +1,115 @@
 
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import AnimatedPattern from './AnimatedPattern';
 
 interface EnhancedPatternProps {
   className?: string;
   variant?: 'eternal' | 'celestial' | 'sacred' | 'radiant';
   intensity?: 'light' | 'medium' | 'strong';
-  animate?: boolean;
+  animated?: boolean;
 }
 
 const EnhancedPattern: React.FC<EnhancedPatternProps> = ({
   className,
   variant = 'eternal',
   intensity = 'medium',
-  animate = true,
+  animated = true
 }) => {
-  const patternRef = useRef<HTMLDivElement>(null);
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Effect for particle animations
   useEffect(() => {
-    if (!animate || !patternRef.current) return;
+    if (!animated || !containerRef.current) return;
     
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!patternRef.current) return;
-      
-      const { clientX, clientY } = e;
-      const { width, height, left, top } = patternRef.current.getBoundingClientRect();
-      
-      const x = (clientX - left) / width;
-      const y = (clientY - top) / height;
-      
-      // Apply subtle parallax effect to the pattern
-      const moveX = (x - 0.5) * 20; // Move up to 20px
-      const moveY = (y - 0.5) * 20; // Move up to 20px
-      
-      patternRef.current.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    };
+    const container = containerRef.current;
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
     
-    document.addEventListener('mousemove', handleMouseMove);
+    // Number of particles based on intensity
+    const particleCount = intensity === 'light' ? 15 : intensity === 'medium' ? 30 : 50;
+    
+    // Create particles
+    for (let i = 0; i < particleCount; i++) {
+      createParticle(container, width, height, variant);
+    }
     
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
     };
-  }, [animate]);
-
-  const getPatternSvg = () => {
+  }, [animated, variant, intensity]);
+  
+  // Create a single particle
+  const createParticle = (container: HTMLDivElement, width: number, height: number, variant: string) => {
+    const particle = document.createElement('div');
+    
+    // Set base particle styles
+    particle.className = 'absolute rounded-full pointer-events-none';
+    
+    // Set variant-specific styles
+    let colorClass = '';
+    let sizeRange = [2, 5]; // [min, max] in pixels
+    let duration = Math.random() * 15 + 10; // seconds
+    
     switch (variant) {
       case 'eternal':
-        return '/patterns/geometric-pattern.svg';
+        colorClass = Math.random() > 0.5 ? 'bg-eternal-secondary' : 'bg-eternal-primary';
+        sizeRange = [2, 6];
+        break;
       case 'celestial':
-        return '/patterns/constellation-pattern.svg';
+        colorClass = Math.random() > 0.5 ? 'bg-celestial-tertiary' : 'bg-celestial-primary';
+        sizeRange = [1, 4];
+        break;
       case 'sacred':
-        return '/patterns/mosaic-pattern.svg';
+        colorClass = Math.random() > 0.3 
+          ? Math.random() > 0.5 ? 'bg-sacred-primary' : 'bg-sacred-secondary'
+          : 'bg-sacred-tertiary';
+        sizeRange = [2, 5];
+        break;
       case 'radiant':
-        return '/patterns/arabesque-pattern.svg';
+        colorClass = Math.random() > 0.7 ? 'bg-radiant-tertiary' : 'bg-radiant-primary';
+        sizeRange = [1, 4];
+        break;
       default:
-        return '/patterns/geometric-pattern.svg';
+        colorClass = 'bg-white';
     }
+    
+    // Apply color with opacity
+    particle.classList.add(`${colorClass}/10`);
+    
+    // Random size between min and max
+    const size = Math.random() * (sizeRange[1] - sizeRange[0]) + sizeRange[0];
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    
+    // Random position
+    const x = Math.random() * width;
+    const y = Math.random() * height;
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    
+    // Animation properties
+    particle.style.animation = `float ${duration}s ease-in-out infinite`;
+    particle.style.animationDelay = `${Math.random() * 5}s`;
+    
+    // Add to container
+    container.appendChild(particle);
   };
-
-  const getColorClass = () => {
-    switch (variant) {
-      case 'eternal':
-        return 'text-eternal-primary';
-      case 'celestial':
-        return 'text-celestial-primary';
-      case 'sacred':
-        return 'text-sacred-primary';
-      case 'radiant':
-        return 'text-radiant-primary';
-      default:
-        return 'text-primary';
-    }
-  };
-
-  const getOpacity = () => {
-    switch (intensity) {
-      case 'light':
-        return 'opacity-5';
-      case 'medium':
-        return 'opacity-10';
-      case 'strong':
-        return 'opacity-15';
-      default:
-        return 'opacity-10';
-    }
-  };
-
+  
   return (
-    <div className={cn(
-      'absolute inset-0 pointer-events-none z-0 overflow-hidden',
-      animate ? 'transition-transform duration-300 ease-out' : '',
-      getColorClass(),
-      getOpacity(),
-      className
-    )} ref={patternRef}>
-      <div className="absolute inset-0" style={{
-        backgroundImage: `url(${getPatternSvg()})`,
-        backgroundSize: '300px 300px',
-        backgroundRepeat: 'repeat',
-      }}></div>
+    <div className={cn('relative w-full h-full overflow-hidden', className)}>
+      <AnimatedPattern 
+        variant={variant} 
+        intensity={intensity} 
+      />
+      
+      {/* Particle container */}
+      <div 
+        ref={containerRef}
+        className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
+      />
     </div>
   );
 };

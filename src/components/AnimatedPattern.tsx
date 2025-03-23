@@ -6,18 +6,33 @@ interface AnimatedPatternProps {
   className?: string;
   variant?: 'eternal' | 'celestial' | 'sacred' | 'radiant';
   opacity?: number;
+  intensity?: 'light' | 'medium' | 'strong';
 }
 
 const AnimatedPattern: React.FC<AnimatedPatternProps> = ({
   className,
   variant = 'eternal',
-  opacity = 0.1
+  opacity = 0.1,
+  intensity = 'medium'
 }) => {
+  const getOpacityClass = () => {
+    switch (intensity) {
+      case 'light':
+        return 'opacity-5';
+      case 'medium':
+        return 'opacity-10';
+      case 'strong':
+        return 'opacity-20';
+      default:
+        return 'opacity-10';
+    }
+  };
+
   const getPatternSvg = () => {
     switch (variant) {
       case 'eternal':
         return (
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className={getOpacityClass()}>
             <defs>
               <pattern id="eternal-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M20 0L0 20L20 40L40 20Z" fill="currentColor" />
@@ -30,7 +45,7 @@ const AnimatedPattern: React.FC<AnimatedPatternProps> = ({
       
       case 'celestial':
         return (
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className={getOpacityClass()}>
             <defs>
               <pattern id="celestial-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
                 <circle cx="10" cy="10" r="1.5" fill="currentColor" />
@@ -54,7 +69,7 @@ const AnimatedPattern: React.FC<AnimatedPatternProps> = ({
       
       case 'sacred':
         return (
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className={getOpacityClass()}>
             <defs>
               <pattern id="sacred-pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
                 <path d="M25,0 L50,25 L25,50 L0,25 Z" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -68,7 +83,7 @@ const AnimatedPattern: React.FC<AnimatedPatternProps> = ({
       
       case 'radiant':
         return (
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className={getOpacityClass()}>
             <defs>
               <pattern id="radiant-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
                 <path d="M50,0 C50,27.6 27.6,50 0,50 C27.6,50 50,72.4 50,100 C50,72.4 72.4,50 100,50 C72.4,50 50,27.6 50,0" fill="none" stroke="currentColor" strokeWidth="0.5" />
@@ -81,7 +96,7 @@ const AnimatedPattern: React.FC<AnimatedPatternProps> = ({
       
       default:
         return (
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className={getOpacityClass()}>
             <defs>
               <pattern id="default-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M0,20 L40,20 M20,0 L20,40" strokeWidth="1" stroke="currentColor" />
@@ -108,10 +123,27 @@ const AnimatedPattern: React.FC<AnimatedPatternProps> = ({
     }
   };
 
+  const getAnimationClass = () => {
+    // Add different animation classes based on variant
+    switch (variant) {
+      case 'eternal':
+        return 'animate-float';
+      case 'celestial':
+        return 'animate-pulse';
+      case 'sacred':
+        return 'animate-breeze-slow';
+      case 'radiant':
+        return 'animate-rotate-slow';
+      default:
+        return 'animate-float';
+    }
+  };
+
   return (
     <div className={cn(
-      'absolute inset-0 pointer-events-none z-0 animate-float overflow-hidden',
+      'absolute inset-0 pointer-events-none z-0 overflow-hidden',
       getColorClass(),
+      getAnimationClass(),
       className
     )}>
       {getPatternSvg()}

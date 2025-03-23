@@ -15,8 +15,24 @@ const PageLoader: React.FC<PageLoaderProps> = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [loadingMessage, setLoadingMessage] = useState('Loading... Inshallah');
 
   useEffect(() => {
+    // Messages to cycle through
+    const messages = [
+      'Loading... Inshallah',
+      'Preparing your invitation... Inshallah',
+      'Creating a beautiful experience... Inshallah',
+      'Almost ready...'
+    ];
+    
+    // Cycle through messages
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+      messageIndex = (messageIndex + 1) % messages.length;
+      setLoadingMessage(messages[messageIndex]);
+    }, 2000);
+    
     // Simulate loading time with minimum duration
     const startTime = Date.now();
     
@@ -28,13 +44,17 @@ const PageLoader: React.FC<PageLoaderProps> = ({
       
       if (percentage >= 100) {
         clearInterval(interval);
+        clearInterval(messageInterval);
         setTimeout(() => {
           setLoading(false);
         }, 300);
       }
     }, 100);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearInterval(messageInterval);
+    };
   }, [minLoadTime]);
 
   const getLoaderStyles = () => {
@@ -91,7 +111,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({
         </div>
       </div>
       <div className="font-cormorant text-xl font-light tracking-widest animate-pulse mt-4">
-        Loading... Inshallah
+        {loadingMessage}
       </div>
       
       {/* Progress bar */}
